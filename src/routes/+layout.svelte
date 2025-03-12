@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css'
-
 	import Navbar from '$lib/Navbar.svelte'
 	import type { PageData } from './$types'
 	import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'

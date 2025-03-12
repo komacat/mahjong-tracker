@@ -1,15 +1,22 @@
 <script lang="ts">
 	import type { User } from '@prisma/client'
+	import Guest from '$lib/Guest.svelte'
 	import { fade } from 'svelte/transition'
 
 	export let user: User | null = null
 	let menuOpened = false
+	let showGuest = false
 
 	function close() {
 		menuOpened = false
 	}
+	
+	function toggleGuest() {
+		showGuest = !showGuest;
+	}
 </script>
 
+<Guest {showGuest} {toggleGuest}/>
 <nav class="sticky top-0 z-50 flex flex-row items-center justify-between border-b bg-white p-4">
 	<a href="/" class="font-extrabold tracking-tight">Mahjong Tracker</a>
 
@@ -17,7 +24,7 @@
 		{#if user != null}
 			<button on:click={() => (menuOpened = !menuOpened)}>
 				<img
-					src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
+					src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp` : '/default_avatar.jpg'}
 					alt="avatar of {user.username}"
 					class="h-12 w-12 rounded-full"
 				/>
