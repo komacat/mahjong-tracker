@@ -627,7 +627,7 @@ export const computeState = wrapCatching(({ user, players, ruleset, actions }: {
             }
         }
 
-        if (ruleset.player === "THREE" && state.round % 3 === 0) {
+        if (ruleset.player === "THREE" && state.round % 4 === 3) {
             state.round += 1
         }
 
