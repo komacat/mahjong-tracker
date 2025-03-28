@@ -627,6 +627,10 @@ export const computeState = wrapCatching(({ user, players, ruleset, actions }: {
             }
         }
 
+        if (ruleset.player === "THREE" && state.round % 4 === 3) {
+            state.round += 1
+        }
+
         let done = action.type === 'end'
 
         const endRound = ruleset.length === 'TONPU' ? 4 : 8

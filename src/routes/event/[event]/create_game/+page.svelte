@@ -31,6 +31,7 @@
 		id: string
 		user: User
 	}[] = []
+	let rosterDropdown = false
 
 	function shuffle(array: any[]) {
 		let currentIndex = array.length
@@ -142,9 +143,13 @@
 					<div class="relative flex flex-row space-x-2 px-2">
 						<input
 							type="text"
+							on:focus={() => {
+								console.log('Input focused');
+								rosterDropdown = true;
+							}}
 							bind:value={userSearch}
 							placeholder="Add player"
-							class="peer w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+							class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
 						/>
 						<button
 							on:click={() => (roster = shuffle(roster))}
@@ -153,27 +158,44 @@
 						>
 							casino
 						</button>
-						<div
-							class="absolute -left-1 top-10 hidden w-[calc(100%-4rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
-						>
-							{#if searchResult.length > 0}
-								{#each searchResult as user}
+						{#if rosterDropdown}
+							<div
+								class="absolute -left-1 top-10 flex w-[calc(100%-4rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg"
+							>
+								{#if searchResult.length > 0}
+									{#each searchResult as user}
+										<button
+											on:mousedown={() => {
+												roster = [...roster, { id: user.id, user }];
+												rosterDropdown = false;
+											}}
+											class="flex flex-row items-center space-x-2 py-4"
+										>
+											<img
+												src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
+												alt="avatar of {user.username}"
+												class="h-8 w-8 rounded-full"
+											/>
+											<p>{user.username}</p>
+										</button>
+									{/each}
+								{:else}
+									<p>No result</p>
+								{/if}
+								<div class="flex flex-row">
+									<input type="text" placeholder="Add guest player" class="peer w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
 									<button
-										on:mousedown={() => (roster = [...roster, { id: user.id, user }])}
+										on:mousedown={(event) => {
+											roster = [...roster];
+											rosterDropdown = false;
+										}}
 										class="flex flex-row items-center space-x-2 py-4"
 									>
-										<img
-											src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
-											alt="avatar of {user.username}"
-											class="h-8 w-8 rounded-full"
-										/>
-										<p>{user.username}</p>
+										<p>Submit</p>
 									</button>
-								{/each}
-							{:else}
-								<p>No result</p>
-							{/if}
-						</div>
+								</div>
+							</div>
+						{/if}
 					</div>
 					<ol
 						class="flex flex-col"
