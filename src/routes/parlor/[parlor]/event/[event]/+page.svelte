@@ -38,7 +38,7 @@
 				})
 				return acc
 			},
-			Object.fromEntries(data.attendees.map((attendee) => [attendee.userId, [0, 0]]))
+			Object.fromEntries(data.members.map((member) => [member.userId, [0, 0]]))
 		)
 	).sort((a, b) => b[1][0] - a[1][0])
 
@@ -66,26 +66,6 @@
 	<section class="p-4">
 		<div class="flex flex-row items-center">
 			<h1 class="mr-auto text-2xl font-bold">{data.event.name} @ {data.event.parlor.name}</h1>
-			{#if data.joinRequestStatus === 'PENDING'}
-				<p class="flex flex-row items-center p-4 text-sm text-violet-500">
-					<span class="material-symbols-rounded mr-2">hourglass</span>Join request pending
-				</p>
-			{:else if data.joinRequestStatus === 'ACCEPTED'}
-				<p class="flex flex-row items-center text-sm text-green-500">
-					<span class="material-symbols-rounded mr-2">check</span>Joined
-				</p>
-			{:else if data.joinRequestStatus === 'REJECTED'}
-				<button
-					on:click={join}
-					class="flex flex-row items-center rounded-lg border border-red-500 p-4 text-sm text-red-500 transition duration-300 hover:bg-red-500 hover:text-white"
-				>
-					<span class="material-symbols-rounded mr-2">close</span>Join request rejected
-				</button>
-			{:else}
-				<button on:click={join} class="flex flex-row rounded-lg bg-blue-500 p-4 text-white">
-					<span class="material-symbols-rounded mr-2">people</span> Join
-				</button>
-			{/if}
 			<a
 				href="{data.event.id}/settings"
 				class="material-symbols-rounded filled px-5 py-2.5 text-2xl">settings</a
@@ -101,8 +81,8 @@
 				<th class="p-4 text-right text-lg">Score</th>
 				<th class="p-4 text-right text-lg">Games</th>
 				{#each leaderboard as [player, [score, games]], i}
-					{@const playerUser = data.attendees.find((p) => p.user.id === player)?.user}
-					{#if playerUser != null}
+					{@const playerUser = data.members.find((p) => p.user.id === player)?.user}
+					{#if playerUser != null && games > 0}
 						<td class="p-4 text-right text-lg">{i + 1}</td>
 						<td class="flex flex-row items-center p-4 text-lg">
 							<UserAvatar user={playerUser} />

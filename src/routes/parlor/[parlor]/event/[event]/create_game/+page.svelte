@@ -23,7 +23,7 @@
 
 	let form: HTMLFormElement
 
-	$: searchResult = data.attendees
+	$: searchResult = data.members
 		.filter((x) => (userSearch ? x.username.includes(userSearch) : true))
 		.filter((x) => roster.every((it) => it.user.id !== x.id))
 

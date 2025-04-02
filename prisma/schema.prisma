@@ -13,7 +13,7 @@ datasource db {
 
 model UserToken {
   sessionId    String   @id
-  userId       String   
+  userId       String
   user         User     @relation(fields: [userId], references: [id])
   accessToken  String
   refreshToken String
@@ -21,12 +21,13 @@ model UserToken {
 }
 
 model User {
-  id              String  @id
-  avatar          String?
-  username        String
-  token           UserToken[]
-  attendedEvents  EventAttendee[]
-  games           GamePlayer[]
+  id             String          @id
+  avatar         String?
+  username       String
+  token          UserToken[]
+  attendedEvents EventAttendee[]
+  games          GamePlayer[]
+  ParlorMember   ParlorMember[]
 }
 
 model Parlor {
@@ -39,28 +40,33 @@ model Parlor {
   events   Event[]
   members  ParlorMember[]
   rulesets Ruleset[]
+  Game     Game[]
 }
 
 model ParlorMember {
-  id       Int    @id @default(autoincrement())
+  id       Int                     @id @default(autoincrement())
   parlorId Int
+  user     User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
-  parlor   Parlor @relation(fields: [parlorId], references: [id])
+  parlor   Parlor                  @relation(fields: [parlorId], references: [id])
+  status   ParlorJoinRequestStatus
+
+  @@unique([userId, parlorId])
 }
 
 model Event {
-  id              Int                @id @default(autoincrement())
-  name            String
-  location        String
-  description     String
-  parlorId        Int
-  rulesetId       Int
+  id          Int             @id @default(autoincrement())
+  name        String
+  location    String
+  description String
+  parlorId    Int
+  rulesetId   Int
   /// [EventJoinPolicy]
-  joinPolicy      Json
-  parlor          Parlor             @relation(fields: [parlorId], references: [id])
-  ruleset         Ruleset            @relation(fields: [rulesetId], references: [id])
-  attendees       EventAttendee[]
-  games           Game[]
+  joinPolicy  Json
+  parlor      Parlor          @relation(fields: [parlorId], references: [id])
+  ruleset     Ruleset         @relation(fields: [rulesetId], references: [id])
+  attendees   EventAttendee[]
+  games       Game[]
 }
 
 model EventAttendee {
@@ -69,11 +75,12 @@ model EventAttendee {
   eventId Int
   status  EventJoinRequestStatus
   event   Event                  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
   @@id([userId, eventId])
 }
 
 model Game {
-  id              Int      @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   name            String
   table           Int
   startTime       DateTime?
@@ -83,16 +90,19 @@ model Game {
   actions         Json
   /// [Timer]
   timer           Json
-  event           Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  event           Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId         Int
+  parlor          Parlor?       @relation(fields: [parlorId], references: [id])
+  parlorId        Int?
 }
 
 model GamePlayer {
-  gameId  Int
-  userId  String
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  game    Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  index   Int
+  gameId Int
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  index  Int
+
   @@id([gameId, userId])
 }
 
@@ -133,6 +143,12 @@ model Ruleset {
   chonbo              Json
   events              Event[]
   parlor              Parlor              @relation(fields: [parlorId], references: [id])
+}
+
+enum ParlorJoinRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 enum EventJoinRequestStatus {

@@ -54,7 +54,7 @@
 		const json = await response.json()
 
 		if (response.ok) {
-			goto(`/event/${json.eventId}`)
+			goto(`/parlor/${data.parlor.id}/event/${json.eventId}`)
 		} else {
 			error = json.message
 		}

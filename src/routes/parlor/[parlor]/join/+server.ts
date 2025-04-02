@@ -11,10 +11,10 @@ export const POST = (async ({ cookies, params, request }) => {
         error(400, 'Invalid captcha token')
     }
 
-    const eventID = +(params.event ?? NaN)
+    const parlorId = +(params.parlor ?? NaN)
 
-    if (isNaN(eventID)) {
-        error(404, 'Event not found');
+    if (isNaN(parlorId)) {
+        error(404, 'Parlor not found');
     }
 
     const sessionId = getSessionId(cookies);
@@ -24,21 +24,21 @@ export const POST = (async ({ cookies, params, request }) => {
         error(401, 'Unauthorized');
     }
 
-    const event = await prisma.event.findUnique({
+    const parlor = await prisma.parlor.findUnique({
         where: {
-            id: eventID
+            id: parlorId
         }
     });
 
-    if (event == null) {
-        error(404, 'Event not found');
+    if (parlor == null) {
+        error(404, 'Parlor not found');
     }
 
-    await prisma.eventAttendee.upsert({
+    await prisma.parlorMember.upsert({
         where: {
-            userId_eventId: {
+            userId_parlorId: {
                 userId: user.id,
-                eventId: event.id
+                parlorId: parlor.id
             }
         },
         update: {
@@ -51,9 +51,9 @@ export const POST = (async ({ cookies, params, request }) => {
                     id: user.id
                 }
             },
-            event: {
+            parlor: {
                 connect: {
-                    id: event.id
+                    id: parlor.id
                 }
             }
         }

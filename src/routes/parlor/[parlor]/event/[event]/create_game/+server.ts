@@ -15,9 +15,14 @@ export const POST = (async ({ params, request }) => {
     const roster = body.getAll('roster').map(x => x.toString())
 
     const eventId = +(params.event ?? NaN)
+    const parlorId = +(params.parlor ?? NaN)
 
     if (isNaN(eventId)) {
         error(404, 'Event not found')
+    }
+
+    if (isNaN(parlorId)) {
+        error(404, 'Parlor not found')
     }
 
     const ruleset = await prisma.event.findUnique({
@@ -52,6 +57,11 @@ export const POST = (async ({ params, request }) => {
                 event: {
                     connect: {
                         id: eventId
+                    }
+                },
+                parlor: {
+                    connect: {
+                        id: parlorId
                     }
                 },
                 players: {

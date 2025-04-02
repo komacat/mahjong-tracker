@@ -3,15 +3,15 @@ import type { PageServerLoad } from './$types'
 import prisma from '$lib/server/prisma'
 
 export const load = (async ({ params }) => {
-    const eventId = +(params.event ?? NaN)
+    const parlorId = +(params.parlor ?? NaN)
 
-    if (isNaN(eventId)) {
+    if (isNaN(parlorId)) {
         error(404, 'Event not found')
     }
 
-    const attendees = await prisma.eventAttendee.findMany({
+    const members = await prisma.parlorMember.findMany({
         where: {
-            eventId,
+            parlorId,
             status: 'ACCEPTED'
         },
         include: {
@@ -20,6 +20,6 @@ export const load = (async ({ params }) => {
     })
 
     return {
-        attendees: attendees.map(attendee => attendee.user)
+        members: members.map(member => member.user)
     }
 }) satisfies PageServerLoad
