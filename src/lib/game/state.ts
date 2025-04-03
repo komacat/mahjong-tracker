@@ -681,7 +681,7 @@ export const computeState = wrapCatching(({ user, players, ruleset, actions }: {
                         - ruleset.returnScore
                         + (i === 0 ? (ruleset.player === 'FOUR' ? 4 : 3) * (ruleset.returnScore - ruleset.startScore) : 0)
                     ) / 100 + uma[i] * 10),
-                    penalty: player.penalty
+                    penalty: player.penalty / 100
                 }))
             }
         }
