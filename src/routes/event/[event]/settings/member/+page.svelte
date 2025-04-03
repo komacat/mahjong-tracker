@@ -3,8 +3,12 @@
 	import type { PageData } from './$types'
 	import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
 	import UserAvatar from '$lib/UserAvatar.svelte'
+	import Search from '$lib/Search.svelte'
+	import type { User } from '@prisma/client'
 
 	export let data: PageData
+	let usersList: User[] = data.users
+	let attendees = data.attendee
 
 	async function decision(user: string, action: 'accept' | 'reject' | 'remove') {
 		window.grecaptcha.ready(() => {
@@ -31,6 +35,12 @@
 <main class="mx-auto max-w-2xl">
 	<section class="p-4">
 		<h1 class="text-2xl font-bold">{data.event.name} @ {data.event.parlor.name} Settings</h1>
+	</section>
+	<section class="p-4">
+		<h2 class="text-xl font-semibold">
+			Add Player
+		</h2>
+		<Search {usersList} {attendees}/>
 	</section>
 	<section>
 		<h2 class="p-4 text-xl font-semibold">
