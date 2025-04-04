@@ -15,9 +15,14 @@
 		window.grecaptcha.ready(() => {
 			window.grecaptcha
 				.execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
-				.then(async () => {
-					await fetch(`/event/${data.event.id}/join`, { method: 'POST', body: user })
-					console.log("errmmm")
+				.then(async (token) => {
+					await fetch(`/event/${data.event.id}/join`, { 
+						method: 'POST', 
+						body: JSON.stringify({
+							token,
+							user
+						})
+					})
 					invalidateAll()
 				})
 		})

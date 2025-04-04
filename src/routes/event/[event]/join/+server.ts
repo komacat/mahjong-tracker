@@ -1,8 +1,15 @@
 import { error, type RequestHandler } from "@sveltejs/kit";
 import prisma from "$lib/server/prisma";
+import { validateCaptcha } from "$lib/server/captcha";
 
 export const POST = (async ({ params, request }) => {
-    const userId = await request.text()
+    const data = await request.json()
+    const userId = data.user
+    const captchaToken = data.token
+
+    if (!validateCaptcha(captchaToken)) {
+        error(400, 'Invalid captcha token')
+    }
 
     const eventID = +(params.event ?? NaN)
 
