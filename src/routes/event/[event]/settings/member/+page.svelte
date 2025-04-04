@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidate, invalidateAll } from '$app/navigation'
+	import { invalidateAll } from '$app/navigation'
 	import type { PageData } from './$types'
 	import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
 	import UserAvatar from '$lib/UserAvatar.svelte'
@@ -17,7 +17,7 @@
 				.execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
 				.then(async (token) => {
 					await fetch(`/event/${data.event.id}/join`, { 
-						method: 'POST', 
+						method: 'POST',
 						body: JSON.stringify({
 							token,
 							user
