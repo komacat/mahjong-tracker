@@ -9,9 +9,9 @@
 	export let data: PageData
 	let usersList: User[] = data.users
 	let attendees = data.attendee
+	$: attendees = data.attendee
 
 	export async function join(user: string) {
-		console.log("joiner in chat")
 		window.grecaptcha.ready(() => {
 			window.grecaptcha
 				.execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
@@ -58,7 +58,7 @@
 		<h2 class="text-xl font-semibold">
 			Add Player
 		</h2>
-		<Search {usersList} {attendees} {join}/>
+		<Search {usersList} bind:attendees {join}/>
 	</section>
 	<section>
 		<h2 class="p-4 text-xl font-semibold">

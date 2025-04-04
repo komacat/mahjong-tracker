@@ -6,8 +6,6 @@ export const POST = (async ({ params, request }) => {
     const data = await request.json()
     const userId = data.user
     const captchaToken = data.token
-    console.log("Captcha Token:", captchaToken);
-    console.log("User ID:", userId);
 
     if (!validateCaptcha(captchaToken)) {
         error(400, 'Invalid captcha token')
