@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation'
+	import { invalidate, invalidateAll } from '$app/navigation'
 	import type { PageData } from './$types'
 	import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
 	import UserAvatar from '$lib/UserAvatar.svelte'
@@ -9,6 +9,19 @@
 	export let data: PageData
 	let usersList: User[] = data.users
 	let attendees = data.attendee
+
+	export async function join(user: string) {
+		console.log("joiner in chat")
+		window.grecaptcha.ready(() => {
+			window.grecaptcha
+				.execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
+				.then(async () => {
+					await fetch(`/event/${data.event.id}/join`, { method: 'POST', body: user })
+					console.log("errmmm")
+					invalidateAll()
+				})
+		})
+	}
 
 	async function decision(user: string, action: 'accept' | 'reject' | 'remove') {
 		window.grecaptcha.ready(() => {
@@ -40,7 +53,7 @@
 		<h2 class="text-xl font-semibold">
 			Add Player
 		</h2>
-		<Search {usersList} {attendees}/>
+		<Search {usersList} {attendees} {join}/>
 	</section>
 	<section>
 		<h2 class="p-4 text-xl font-semibold">
