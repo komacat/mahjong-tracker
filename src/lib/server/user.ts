@@ -29,10 +29,6 @@ export async function getUserById(userId: string) {
     return prisma.user.findUnique({ where: { id: userId } })
 }
 
-export async function getAllUsers(): Promise<User[]> {
-    return await prisma.user.findMany();
-}
-
 export async function registerUserToken({
     sessionId,
     accessToken,
