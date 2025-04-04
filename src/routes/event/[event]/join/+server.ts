@@ -38,10 +38,10 @@ export const POST = (async ({ params, request }) => {
             }
         },
         update: {
-            status: 'ACCEPTED'
+            status: 'PENDING'
         },
         create: {
-            status: 'ACCEPTED',
+            status: 'PENDING',
             user: {
                 connect: {
                     id: user.id
