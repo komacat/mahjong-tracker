@@ -1,5 +1,5 @@
-import { getUser } from "$lib/server/user";
-import type { LayoutServerLoad } from "./$types";
+import { getUser } from '$lib/server/user'
+import type { LayoutServerLoad } from './$types'
 
 export const load = (async ({ cookies }) => {
     const sessionId = cookies.get('SESSION_ID')
@@ -13,4 +13,4 @@ export const load = (async ({ cookies }) => {
     return {
         user: await getUser(sessionId)
     }
-}) satisfies LayoutServerLoad;
+}) satisfies LayoutServerLoad

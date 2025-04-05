@@ -1,13 +1,13 @@
-import { error, json } from "@sveltejs/kit";
-import type { RequestHandler } from "./$types";
-import { sanitizeAction, sanitizeTimerAction } from "$lib/validator";
-import prisma from "$lib/server/prisma";
-import { computeState } from "$lib/game/state";
-import { validateCaptcha } from "$lib/server/captcha";
-import { DateTime, Duration } from "luxon";
+import { error, json } from '@sveltejs/kit'
+import type { RequestHandler } from './$types'
+import { sanitizeAction, sanitizeTimerAction } from '$lib/validator'
+import prisma from '$lib/server/prisma'
+import { computeState } from '$lib/game/state'
+import { validateCaptcha } from '$lib/server/captcha'
+import { DateTime, Duration } from 'luxon'
 
 export const GET = (async ({ params }) => {
-    const gameId = +(params.game ?? NaN);
+    const gameId = +(params.game ?? NaN)
 
     if (isNaN(gameId)) {
         error(404, 'Game not found')
@@ -39,10 +39,10 @@ export const GET = (async ({ params }) => {
     }
 
     return json(game)
-}) satisfies RequestHandler;
+}) satisfies RequestHandler
 
-export const POST = (async ({ params, request }) => {
-    const gameId = +(params.game ?? NaN);
+export const POST = async ({ params, request }) => {
+    const gameId = +(params.game ?? NaN)
 
     if (isNaN(gameId)) {
         error(404, 'Game not found')
@@ -91,15 +91,15 @@ export const POST = (async ({ params, request }) => {
             error(404, 'Game not found')
         }
 
-
         switch (sanitizedAction.type) {
             case 'riichi': {
-                if (game.players.find(it => it.user.id === sanitizedAction.player) == null) {
+                if (game.players.find((it) => it.user.id === sanitizedAction.player) == null) {
                     error(400, 'Player not found')
                 }
 
-                const riichiIndex = actions.findLastIndex(it =>
-                    it.type !== 'riichi' || it.player === sanitizedAction.player)
+                const riichiIndex = actions.findLastIndex(
+                    (it) => it.type !== 'riichi' || it.player === sanitizedAction.player
+                )
 
                 if (riichiIndex !== -1 && actions[riichiIndex].type === 'riichi') {
                     actions.splice(riichiIndex, 1)
@@ -145,9 +145,9 @@ export const POST = (async ({ params, request }) => {
                 timer = {
                     state: 'running',
                     startedAt: timer.startedAt,
-                    pausedBy: Duration.fromISO(timer.pausedBy).plus(
-                        DateTime.now().diff(DateTime.fromISO(timer.pausedAt))
-                    ).toISO()!
+                    pausedBy: Duration.fromISO(timer.pausedBy)
+                        .plus(DateTime.now().diff(DateTime.fromISO(timer.pausedAt)))
+                        .toISO()!
                 }
                 break
             }
@@ -162,7 +162,7 @@ export const POST = (async ({ params, request }) => {
 
         const state = computeState({
             user: null,
-            players: game.players.map(it => it.user),
+            players: game.players.map((it) => it.user),
             ruleset: game.event.ruleset,
             actions: game.actions
         })
@@ -202,16 +202,16 @@ export const POST = (async ({ params, request }) => {
     })
 
     return new Response(null)
-})
+}
 
-export const DELETE = (async ({ params, request }) => {
+export const DELETE = async ({ params, request }) => {
     const captchaToken = await request.text()
 
     if (!validateCaptcha(captchaToken)) {
         error(400, 'Invalid Captcha')
     }
 
-    const gameId = +(params.game ?? NaN);
+    const gameId = +(params.game ?? NaN)
 
     if (isNaN(gameId)) {
         error(404, 'Game not found')
@@ -243,15 +243,8 @@ export const DELETE = (async ({ params, request }) => {
             error(404, 'Game not found')
         }
 
-        const actionsType = [
-            'ron',
-            'tsumo',
-            'draw',
-            'chonbo',
-            'oyaNagashi',
-            'end'
-        ]
-        const lastAction = actions.findLastIndex(it => actionsType.includes(it.type))
+        const actionsType = ['ron', 'tsumo', 'draw', 'chonbo', 'oyaNagashi', 'end']
+        const lastAction = actions.findLastIndex((it) => actionsType.includes(it.type))
 
         if (lastAction === -1) {
             error(400, 'No action to undo')
@@ -265,9 +258,9 @@ export const DELETE = (async ({ params, request }) => {
             timer = {
                 state: 'running',
                 startedAt: timer.startedAt,
-                pausedBy: Duration.fromISO(timer.pausedBy).plus(
-                    DateTime.now().diff(DateTime.fromISO(timer.endedAt))
-                ).toISO()!
+                pausedBy: Duration.fromISO(timer.pausedBy)
+                    .plus(DateTime.now().diff(DateTime.fromISO(timer.endedAt)))
+                    .toISO()!
             }
         }
 
@@ -283,4 +276,4 @@ export const DELETE = (async ({ params, request }) => {
     })
 
     return new Response(null)
-})
+}

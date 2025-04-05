@@ -20,6 +20,6 @@ export const load = (async ({ params }) => {
     })
 
     return {
-        attendees: attendees.map(attendee => attendee.user)
+        attendees: attendees.map((attendee) => attendee.user)
     }
 }) satisfies PageServerLoad

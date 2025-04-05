@@ -1,10 +1,10 @@
-import { validateCaptcha } from "$lib/server/captcha";
-import { registerParlor } from "$lib/server/parlor";
-import { getSessionId } from "$lib/server/session";
-import { getUser } from "$lib/server/user";
-import { error, json } from "@sveltejs/kit";
+import { validateCaptcha } from '$lib/server/captcha'
+import { registerParlor } from '$lib/server/parlor'
+import { getSessionId } from '$lib/server/session'
+import { getUser } from '$lib/server/user'
+import { error, json } from '@sveltejs/kit'
 
-export const POST = (async ({ cookies, request }) => {
+export const POST = async ({ cookies, request }) => {
     const data = await request.formData()
 
     if (!validateCaptcha(data.get('token')?.toString())) {
@@ -23,7 +23,6 @@ export const POST = (async ({ cookies, request }) => {
         error(400, 'Name must be at least 3 characters long')
     }
 
-
     const parlor = await registerParlor({
         name: name!,
         location: data.get('location')?.toString() ?? '',
@@ -33,4 +32,4 @@ export const POST = (async ({ cookies, request }) => {
     })
 
     return json({ id: parlor.id })
-})
+}

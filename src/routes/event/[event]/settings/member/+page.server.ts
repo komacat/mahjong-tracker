@@ -1,6 +1,6 @@
-import { error } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
-import prisma from "$lib/server/prisma";
+import { error } from '@sveltejs/kit'
+import type { PageServerLoad } from './$types'
+import prisma from '$lib/server/prisma'
 
 export const load = (async ({ params }) => {
     const eventId = +(params.event ?? NaN)

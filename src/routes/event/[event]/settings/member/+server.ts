@@ -1,8 +1,8 @@
-import { error } from "@sveltejs/kit";
-import prisma from "$lib/server/prisma";
-import { validateCaptcha } from "$lib/server/captcha";
+import { error } from '@sveltejs/kit'
+import prisma from '$lib/server/prisma'
+import { validateCaptcha } from '$lib/server/captcha'
 
-export const POST = (async ({ params, request }) => {
+export const POST = async ({ params, request }) => {
     const eventId = +(params.event ?? NaN)
 
     if (isNaN(eventId)) {
@@ -65,4 +65,4 @@ export const POST = (async ({ params, request }) => {
     }
 
     return new Response()
-})
+}

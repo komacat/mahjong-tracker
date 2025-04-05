@@ -1,7 +1,7 @@
 import prisma from '$lib/server/prisma.js'
 import { error } from '@sveltejs/kit'
 
-export const load = (async ({ params }) => {
+export const load = async ({ params }) => {
     const parlorId = +(params.parlor ?? NaN)
 
     if (isNaN(parlorId)) {
@@ -25,4 +25,4 @@ export const load = (async ({ params }) => {
     }
 
     return { ruleset }
-})
+}
