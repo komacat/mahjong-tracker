@@ -16,7 +16,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ../private.key
           sudo chmod 600 ../private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -i $SSH_KEY_PATH $SSH_USER@$SSH_HOST "cd ~/mahjong-tracker && git pull --rebase && docker compose up -d --build"
+          ssh -i $SSH_KEY_PATH "${SSH_USER}@${SSH_HOST}" "cd ~/mahjong-tracker && git pull --rebase && docker compose up -d --build"
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.KEY}}
