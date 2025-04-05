@@ -1,5 +1,5 @@
-import { getParlor } from '$lib/server/parlor';
-import { error } from '@sveltejs/kit';
+import { getParlor } from '$lib/server/parlor'
+import { error } from '@sveltejs/kit'
 import type { LayoutServerLoad } from './$types'
 
 export const load = (async ({ params }) => {
@@ -16,4 +16,4 @@ export const load = (async ({ params }) => {
     }
 
     return { parlor }
-}) satisfies LayoutServerLoad;
+}) satisfies LayoutServerLoad
