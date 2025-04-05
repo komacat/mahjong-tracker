@@ -1,4 +1,4 @@
-import { CAPTCHA_SERVER_KEY } from "$env/static/private"
+import { CAPTCHA_SERVER_KEY } from '$env/static/private'
 
 export async function validateCaptcha(token: string | undefined | null) {
     if (!token) {
@@ -14,7 +14,7 @@ export async function validateCaptcha(token: string | undefined | null) {
             secret: CAPTCHA_SERVER_KEY,
             response: token
         })
-    }).then(res => res.json())
+    }).then((res) => res.json())
 
     return captchaResponse.success
 }

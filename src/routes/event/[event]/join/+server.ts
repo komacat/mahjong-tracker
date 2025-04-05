@@ -1,8 +1,8 @@
-import { getSessionId } from "$lib/server/session";
-import { getUser } from "$lib/server/user";
-import { error, type RequestHandler } from "@sveltejs/kit";
-import prisma from "$lib/server/prisma";
-import { validateCaptcha } from "$lib/server/captcha";
+import { getSessionId } from '$lib/server/session'
+import { getUser } from '$lib/server/user'
+import { error, type RequestHandler } from '@sveltejs/kit'
+import prisma from '$lib/server/prisma'
+import { validateCaptcha } from '$lib/server/captcha'
 
 export const POST = (async ({ cookies, params, request }) => {
     const cpatchaToken = await request.text()
@@ -14,24 +14,24 @@ export const POST = (async ({ cookies, params, request }) => {
     const eventID = +(params.event ?? NaN)
 
     if (isNaN(eventID)) {
-        error(404, 'Event not found');
+        error(404, 'Event not found')
     }
 
-    const sessionId = getSessionId(cookies);
-    const user = await getUser(sessionId);
+    const sessionId = getSessionId(cookies)
+    const user = await getUser(sessionId)
 
     if (user == null) {
-        error(401, 'Unauthorized');
+        error(401, 'Unauthorized')
     }
 
     const event = await prisma.event.findUnique({
         where: {
             id: eventID
         }
-    });
+    })
 
     if (event == null) {
-        error(404, 'Event not found');
+        error(404, 'Event not found')
     }
 
     await prisma.eventAttendee.upsert({
