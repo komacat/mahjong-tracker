@@ -38,7 +38,7 @@ export function ok<T, E>(value: T): Result<T, E> {
             fn(value)
             return result
         },
-        onFailure: () => result
+        onFailure: () => result,
     }
 
     return result
@@ -54,7 +54,7 @@ export function error<T, E>(error: E): Result<T, E> {
         onFailure: (fn) => {
             fn(error)
             return result
-        }
+        },
     }
 
     return result

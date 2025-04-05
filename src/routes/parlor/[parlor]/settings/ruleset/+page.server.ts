@@ -12,8 +12,8 @@ export const load = (async ({ params }) => {
     return {
         rulesets: await prisma.ruleset.findMany({
             where: {
-                parlorId: parlorId
-            }
-        })
+                parlorId: parlorId,
+            },
+        }),
     }
 }) satisfies PageServerLoad

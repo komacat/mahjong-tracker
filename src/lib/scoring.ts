@@ -27,7 +27,7 @@ export type ScoringSheet = {
 export function generateScoringSheet({
     kiriage,
     fixed30fu,
-    tsumozon
+    tsumozon,
 }: {
     kiriage: boolean
     fixed30fu: boolean
@@ -40,7 +40,7 @@ export function generateScoringSheet({
                 ['Haneman', 18000],
                 ['Baiman', 24000],
                 ['Sanbaiman', 36000],
-                ['Yakuman', 32000]
+                ['Yakuman', 32000],
             ],
             tsumo: tsumozon
                 ? [
@@ -48,15 +48,15 @@ export function generateScoringSheet({
                       ['Haneman', { fromDealer: 0, fromNonDealer: 6000 }],
                       ['Baiman', { fromDealer: 0, fromNonDealer: 8000 }],
                       ['Sanbaiman', { fromDealer: 0, fromNonDealer: 12000 }],
-                      ['Yakuman', { fromDealer: 0, fromNonDealer: 16000 }]
+                      ['Yakuman', { fromDealer: 0, fromNonDealer: 16000 }],
                   ]
                 : [
                       ['Mangan', { fromDealer: 0, fromNonDealer: 6000 }],
                       ['Haneman', { fromDealer: 0, fromNonDealer: 9000 }],
                       ['Baiman', { fromDealer: 0, fromNonDealer: 12000 }],
                       ['Sanbaiman', { fromDealer: 0, fromNonDealer: 18000 }],
-                      ['Yakuman', { fromDealer: 0, fromNonDealer: 24000 }]
-                  ]
+                      ['Yakuman', { fromDealer: 0, fromNonDealer: 24000 }],
+                  ],
         },
         nonDealer: {
             ron: [
@@ -64,7 +64,7 @@ export function generateScoringSheet({
                 ['Haneman', 12000],
                 ['Baiman', 16000],
                 ['Sanbaiman', 24000],
-                ['Yakuman', 32000]
+                ['Yakuman', 32000],
             ],
             tsumo: tsumozon
                 ? [
@@ -72,16 +72,16 @@ export function generateScoringSheet({
                       ['Haneman', { fromDealer: 6000, fromNonDealer: 3000 }],
                       ['Baiman', { fromDealer: 8000, fromNonDealer: 4000 }],
                       ['Sanbaiman', { fromDealer: 12000, fromNonDealer: 6000 }],
-                      ['Yakuman', { fromDealer: 16000, fromNonDealer: 8000 }]
+                      ['Yakuman', { fromDealer: 16000, fromNonDealer: 8000 }],
                   ]
                 : [
                       ['Mangan', { fromDealer: 5000, fromNonDealer: 3000 }],
                       ['Haneman', { fromDealer: 7500, fromNonDealer: 4500 }],
                       ['Baiman', { fromDealer: 10000, fromNonDealer: 6000 }],
                       ['Sanbaiman', { fromDealer: 15000, fromNonDealer: 9000 }],
-                      ['Yakuman', { fromDealer: 20000, fromNonDealer: 12000 }]
-                  ]
-        }
+                      ['Yakuman', { fromDealer: 20000, fromNonDealer: 12000 }],
+                  ],
+        },
     }
 
     for (let han = 4; han >= 1; han--) {
@@ -100,7 +100,7 @@ export function generateScoringSheet({
             dealerRon: [],
             dealerTsumo: [],
             nonDealerRon: [],
-            nonDealerTsumo: []
+            nonDealerTsumo: [],
         }
 
         for (const fu of [20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110]) {
@@ -120,11 +120,11 @@ export function generateScoringSheet({
             if (fu > 20) {
                 fuSheet.dealerRon.push([
                     fuKey,
-                    Math.ceil((fu * Math.pow(2, han + 2) * 6) / 100) * 100
+                    Math.ceil((fu * Math.pow(2, han + 2) * 6) / 100) * 100,
                 ])
                 fuSheet.nonDealerRon.push([
                     fuKey,
-                    Math.ceil((fu * Math.pow(2, han + 2) * 4) / 100) * 100
+                    Math.ceil((fu * Math.pow(2, han + 2) * 4) / 100) * 100,
                 ])
             }
             fuSheet.dealerTsumo.push([
@@ -132,7 +132,7 @@ export function generateScoringSheet({
                 tsumozon
                     ? {
                           fromDealer: 0,
-                          fromNonDealer: Math.ceil((fu * Math.pow(2, han + 2) * 2) / 100) * 100
+                          fromNonDealer: Math.ceil((fu * Math.pow(2, han + 2) * 2) / 100) * 100,
                       }
                     : {
                           fromDealer: 0,
@@ -142,15 +142,15 @@ export function generateScoringSheet({
                                       (Math.ceil((fu * Math.pow(2, han + 2) * 2) / 100) * 100) /
                                           2) /
                                       100
-                              ) * 100
-                      }
+                              ) * 100,
+                      },
             ])
             fuSheet.nonDealerTsumo.push([
                 fuKey,
                 tsumozon
                     ? {
                           fromDealer: Math.ceil((fu * Math.pow(2, han + 2) * 2) / 100) * 100,
-                          fromNonDealer: Math.ceil((fu * Math.pow(2, han + 2) * 1) / 100) * 100
+                          fromNonDealer: Math.ceil((fu * Math.pow(2, han + 2) * 1) / 100) * 100,
                       }
                     : {
                           fromDealer:
@@ -166,27 +166,27 @@ export function generateScoringSheet({
                                       (Math.ceil((fu * Math.pow(2, han + 2) * 1) / 100) * 100) /
                                           2) /
                                       100
-                              ) * 100
-                      }
+                              ) * 100,
+                      },
             ])
         }
 
         if (fixed30fu) {
             scoringSheet.dealer.ron.unshift([
                 hanKey,
-                fuSheet.dealerRon.find((x) => x[0] === '30 Fu')![1]
+                fuSheet.dealerRon.find((x) => x[0] === '30 Fu')![1],
             ])
             scoringSheet.dealer.tsumo.unshift([
                 hanKey,
-                fuSheet.dealerTsumo.find((x) => x[0] === '30 Fu')![1]
+                fuSheet.dealerTsumo.find((x) => x[0] === '30 Fu')![1],
             ])
             scoringSheet.nonDealer.ron.unshift([
                 hanKey,
-                fuSheet.nonDealerRon.find((x) => x[0] === '30 Fu')![1]
+                fuSheet.nonDealerRon.find((x) => x[0] === '30 Fu')![1],
             ])
             scoringSheet.nonDealer.tsumo.unshift([
                 hanKey,
-                fuSheet.nonDealerTsumo.find((x) => x[0] === '30 Fu')![1]
+                fuSheet.nonDealerTsumo.find((x) => x[0] === '30 Fu')![1],
             ])
         } else {
             scoringSheet.dealer.ron.unshift([hanKey, fuSheet.dealerRon])

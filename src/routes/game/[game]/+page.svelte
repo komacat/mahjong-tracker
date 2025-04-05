@@ -11,7 +11,7 @@
         calculateTsumoPayment,
         canPassDealership,
         computeState,
-        type State
+        type State,
     } from '$lib/game/state'
     import type { PageData } from './$types'
     import type { User } from '@prisma/client'
@@ -29,7 +29,7 @@
         user: data.user,
         players: data.game.players.map((player) => player.user),
         ruleset: data.game.event.ruleset,
-        actions: data.game.actions
+        actions: data.game.actions,
     })
         .onFailure((e) => {
             if (typeof e === 'string') {
@@ -87,7 +87,7 @@
         ron: ['Ron', 'bg-red-500'],
         tsumo: ['Tsumo', 'bg-blue-500'],
         draw: ['Draw', 'bg-gray-500'],
-        chonbo: ['Chonbo', 'bg-yellow-500']
+        chonbo: ['Chonbo', 'bg-yellow-500'],
     }
 
     onMount(() => {
@@ -144,7 +144,7 @@
                       ruleset: data.game.event.ruleset,
                       state,
                       loser: action.loser.id,
-                      scores: action.scores ?? {}
+                      scores: action.scores ?? {},
                   })
                 : {}
 
@@ -188,7 +188,7 @@
             winners[0]?.fromPot ? 'D' : null,
             winners[1]?.fromPot ? 'D' : null,
             winners[2]?.fromPot ? 'D' : null,
-            winners[3]?.fromPot ? 'D' : null
+            winners[3]?.fromPot ? 'D' : null,
         ]
         displayPoint = [
             loserIndex === 0 && winners[1] != null
@@ -224,7 +224,7 @@
             winners[0]?.fromPot ?? 0,
             winners[1]?.fromPot ?? 0,
             winners[2]?.fromPot ?? 0,
-            winners[3]?.fromPot ?? 0
+            winners[3]?.fromPot ?? 0,
         ]
     }
 
@@ -242,11 +242,11 @@
                 ? calculateTsumoPayment({
                       ruleset: data.game.event.ruleset,
                       state,
-                      scores: action.scores
+                      scores: action.scores,
                   })
                 : {
                       payments: {},
-                      fromPot: 0
+                      fromPot: 0,
                   }
 
         const pointsLost = state.players.map((player) => payments.payments[player.user.id] ?? 0)
@@ -261,7 +261,7 @@
             winnerIndex === 0 && payments.fromPot ? 'U' : null,
             winnerIndex === 1 && payments.fromPot ? 'U' : null,
             winnerIndex === 2 && payments.fromPot ? 'U' : null,
-            winnerIndex === 3 && payments.fromPot ? 'U' : null
+            winnerIndex === 3 && payments.fromPot ? 'U' : null,
         ]
 
         displayPoint = [
@@ -274,7 +274,7 @@
             winnerIndex === 0 ? payments.fromPot : 0,
             winnerIndex === 1 ? payments.fromPot : 0,
             winnerIndex === 2 ? payments.fromPot : 0,
-            winnerIndex === 3 ? payments.fromPot : 0
+            winnerIndex === 3 ? payments.fromPot : 0,
         ]
     }
 
@@ -320,7 +320,7 @@
                 ? 'U'
                 : tenpai[2] && !tenpai[3] && !(tenpai[0] && !tenpai[1])
                   ? 'D'
-                  : null
+                  : null,
         ]
 
         displayPoint = [
@@ -343,7 +343,7 @@
                 : 0,
             (!tenpai[2] && tenpai[3]) || (tenpai[2] && !tenpai[3] && !(tenpai[0] && !tenpai[1]))
                 ? tenpaiScore
-                : 0
+                : 0,
         ]
     }
 
@@ -375,9 +375,9 @@
         const response = await fetch(`${data.game.id}/actions`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ ...action, token })
+            body: JSON.stringify({ ...action, token }),
         })
 
         if (!response.ok) {
@@ -399,14 +399,14 @@
         if (action?.type == null) {
             submitAction({
                 type: 'riichi',
-                player: player.id
+                player: player.id,
             })
         } else if (action.type === 'ron') {
             if (action.loser == null) {
                 action = {
                     type: 'ron',
                     loser: player,
-                    scores: {}
+                    scores: {},
                 }
             } else {
                 activeWinner = player
@@ -416,7 +416,7 @@
             action = {
                 type: 'tsumo',
                 winner: player,
-                scores: {}
+                scores: {},
             }
         } else if (action.type === 'draw') {
             if (action.tenpai.includes(player.id)) {
@@ -446,7 +446,7 @@
                     submitAction({
                         type: 'ron',
                         loser: action.loser.id,
-                        scores: action.scores
+                        scores: action.scores,
                     })
                     break
                 case 'tsumo':
@@ -457,13 +457,13 @@
                     submitAction({
                         type: 'tsumo',
                         winner: action.winner.id,
-                        scores: action.scores
+                        scores: action.scores,
                     })
                     break
                 case 'draw':
                     submitAction({
                         type: 'draw',
-                        tenpai: action.tenpai
+                        tenpai: action.tenpai,
                     })
                     break
                 case 'chonbo':
@@ -473,12 +473,12 @@
                     }
                     submitAction({
                         type: 'chonbo',
-                        player: action.player.id
+                        player: action.player.id,
                     })
                     break
                 case 'oyaNagashi':
                     submitAction({
-                        type: 'oyaNagashi'
+                        type: 'oyaNagashi',
                     })
                     break
                 case 'end':
@@ -507,8 +507,8 @@
             tenpai: [
                 ...(state?.players
                     .filter((player) => player.richi)
-                    .map((player) => player.user.id) ?? [])
-            ]
+                    .map((player) => player.user.id) ?? []),
+            ],
         }
     }
 
@@ -523,7 +523,7 @@
                 .then((token) => {
                     fetch(`${data.game.id}/actions`, {
                         method: 'DELETE',
-                        body: token
+                        body: token,
                     }).then(async (r) => {
                         if (!r.ok) {
                             error = (await r.json()).message
@@ -1036,7 +1036,7 @@
                                                 player.user.id,
                                                 player.wind === 0
                                                     ? score.fromDealer
-                                                    : score.fromNonDealer
+                                                    : score.fromNonDealer,
                                             ]
                                         })
                                         .filter((it) => it != null)

@@ -17,8 +17,8 @@ export const DELETE = async ({ params, request }) => {
 
     await prisma.game.delete({
         where: {
-            id: gameId
-        }
+            id: gameId,
+        },
     })
 
     return new Response(null)

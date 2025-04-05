@@ -12,11 +12,11 @@ export const load = (async ({ params }) => {
     return {
         attendee: await prisma.eventAttendee.findMany({
             where: {
-                eventId
+                eventId,
             },
             include: {
-                user: true
-            }
-        })
+                user: true,
+            },
+        }),
     }
 }) satisfies PageServerLoad

@@ -23,8 +23,8 @@ export const POST = async ({ params, request }) => {
     const ruleset = await prisma.event
         .findUnique({
             where: {
-                id: eventId
-            }
+                id: eventId,
+            },
         })
         .ruleset()
 
@@ -54,24 +54,24 @@ export const POST = async ({ params, request }) => {
                     durationSeconds,
                     event: {
                         connect: {
-                            id: eventId
-                        }
+                            id: eventId,
+                        },
                     },
                     players: {
                         create: players.map((x, index) => ({
                             user: {
                                 connect: {
-                                    id: x
-                                }
+                                    id: x,
+                                },
                             },
-                            index
-                        }))
+                            index,
+                        })),
                     },
                     timer: {
-                        state: 'waiting'
+                        state: 'waiting',
                     },
-                    actions: []
-                }
+                    actions: [],
+                },
             })
         )
     }

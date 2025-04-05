@@ -15,23 +15,23 @@ export const GET = (async ({ params }) => {
 
     const game = await prisma.game.findUnique({
         where: {
-            id: gameId
+            id: gameId,
         },
         include: {
             event: {
                 include: {
-                    ruleset: true
-                }
+                    ruleset: true,
+                },
             },
             players: {
                 include: {
-                    user: true
+                    user: true,
                 },
                 orderBy: {
-                    index: 'asc'
-                }
-            }
-        }
+                    index: 'asc',
+                },
+            },
+        },
     })
 
     if (game == null) {
@@ -63,25 +63,25 @@ export const POST = async ({ params, request }) => {
     await prisma.$transaction(async (tx) => {
         const game = await tx.game.findUnique({
             where: {
-                id: gameId
+                id: gameId,
             },
             select: {
                 timer: true,
                 actions: true,
                 players: {
                     include: {
-                        user: true
+                        user: true,
                     },
                     orderBy: {
-                        index: 'asc'
-                    }
+                        index: 'asc',
+                    },
                 },
                 event: {
                     include: {
-                        ruleset: true
-                    }
-                }
-            }
+                        ruleset: true,
+                    },
+                },
+            },
         })
 
         const actions = game?.actions
@@ -108,7 +108,7 @@ export const POST = async ({ params, request }) => {
 
                 actions.push({
                     type: 'riichi',
-                    player: sanitizedAction.player
+                    player: sanitizedAction.player,
                 })
                 break
             }
@@ -120,7 +120,7 @@ export const POST = async ({ params, request }) => {
                 timer = {
                     state: 'running',
                     startedAt: DateTime.now().toISO(),
-                    pausedBy: Duration.fromMillis(0).toISO()
+                    pausedBy: Duration.fromMillis(0).toISO(),
                 }
                 break
             }
@@ -133,7 +133,7 @@ export const POST = async ({ params, request }) => {
                     state: 'paused',
                     startedAt: timer.startedAt,
                     pausedAt: DateTime.now().toISO(),
-                    pausedBy: timer.pausedBy
+                    pausedBy: timer.pausedBy,
                 }
                 break
             }
@@ -147,7 +147,7 @@ export const POST = async ({ params, request }) => {
                     startedAt: timer.startedAt,
                     pausedBy: Duration.fromISO(timer.pausedBy)
                         .plus(DateTime.now().diff(DateTime.fromISO(timer.pausedAt)))
-                        .toISO()!
+                        .toISO()!,
                 }
                 break
             }
@@ -164,7 +164,7 @@ export const POST = async ({ params, request }) => {
             user: null,
             players: game.players.map((it) => it.user),
             ruleset: game.event.ruleset,
-            actions: game.actions
+            actions: game.actions,
         })
 
         if (!state.ok) {
@@ -186,18 +186,18 @@ export const POST = async ({ params, request }) => {
                 state: 'ended',
                 startedAt: timer.startedAt,
                 pausedBy: timer.pausedBy,
-                endedAt: DateTime.now().toISO()
+                endedAt: DateTime.now().toISO(),
             }
         }
 
         await tx.game.update({
             where: {
-                id: gameId
+                id: gameId,
             },
             data: {
                 actions,
-                timer
-            }
+                timer,
+            },
         })
     })
 
@@ -220,20 +220,20 @@ export const DELETE = async ({ params, request }) => {
     await prisma.$transaction(async (tx) => {
         const game = await tx.game.findUnique({
             where: {
-                id: gameId
+                id: gameId,
             },
             include: {
                 players: {
                     include: {
-                        user: true
-                    }
+                        user: true,
+                    },
                 },
                 event: {
                     include: {
-                        ruleset: true
-                    }
-                }
-            }
+                        ruleset: true,
+                    },
+                },
+            },
         })
 
         const actions = game?.actions
@@ -260,18 +260,18 @@ export const DELETE = async ({ params, request }) => {
                 startedAt: timer.startedAt,
                 pausedBy: Duration.fromISO(timer.pausedBy)
                     .plus(DateTime.now().diff(DateTime.fromISO(timer.endedAt)))
-                    .toISO()!
+                    .toISO()!,
             }
         }
 
         await tx.game.update({
             where: {
-                id: gameId
+                id: gameId,
             },
             data: {
                 actions: actions.slice(0, lastAction),
-                timer
-            }
+                timer,
+            },
         })
     })
 

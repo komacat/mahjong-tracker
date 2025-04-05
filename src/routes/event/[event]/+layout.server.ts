@@ -11,12 +11,12 @@ export const load = (async ({ params }) => {
 
     const event = await prisma.event.findUnique({
         where: {
-            id: eventId
+            id: eventId,
         },
         include: {
             ruleset: true,
-            parlor: true
-        }
+            parlor: true,
+        },
     })
 
     if (event == null) {

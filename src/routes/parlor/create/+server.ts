@@ -28,7 +28,7 @@ export const POST = async ({ cookies, request }) => {
         location: data.get('location')?.toString() ?? '',
         owner: owner.id,
         website: data.get('website')?.toString(),
-        note: data.get('note')?.toString() ?? ''
+        note: data.get('note')?.toString() ?? '',
     })
 
     return json({ id: parlor.id })

@@ -35,7 +35,7 @@
 
         fetch(form.target, {
             method: 'POST',
-            body: formData
+            body: formData,
         })
             .then(async (response) => {
                 const body = await response.json()

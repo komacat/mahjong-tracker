@@ -7,7 +7,7 @@ test('tsumozon kiriage', () => {
             generateScoringSheet({
                 kiriage: true,
                 fixed30fu: false,
-                tsumozon: false
+                tsumozon: false,
             }),
             null,
             4

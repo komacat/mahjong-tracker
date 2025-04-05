@@ -11,23 +11,23 @@ export const load = (async ({ params }) => {
 
     const game = await prisma.game.findUnique({
         where: {
-            id: gameId
+            id: gameId,
         },
         include: {
             event: {
                 include: {
-                    ruleset: true
-                }
+                    ruleset: true,
+                },
             },
             players: {
                 include: {
-                    user: true
+                    user: true,
                 },
                 orderBy: {
-                    index: 'asc'
-                }
-            }
-        }
+                    index: 'asc',
+                },
+            },
+        },
     })
 
     if (game == null) {

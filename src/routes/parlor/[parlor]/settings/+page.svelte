@@ -6,20 +6,20 @@
     const menu = [
         {
             name: 'General',
-            href: 'settings/general'
+            href: 'settings/general',
         },
         {
             name: 'Members',
-            href: 'settings/member'
+            href: 'settings/member',
         },
         {
             name: 'Roles',
-            href: 'settings/role'
+            href: 'settings/role',
         },
         {
             name: 'Rulesets',
-            href: 'settings/ruleset'
-        }
+            href: 'settings/ruleset',
+        },
     ]
 </script>
 

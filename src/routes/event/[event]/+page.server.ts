@@ -21,9 +21,9 @@ export const load = (async ({ cookies, params, url }) => {
             where: {
                 userId_eventId: {
                     userId: user.id,
-                    eventId
-                }
-            }
+                    eventId,
+                },
+            },
         }))
 
     const page = +(url.searchParams.get('page') ?? '1')
@@ -35,30 +35,30 @@ export const load = (async ({ cookies, params, url }) => {
     const attendees = await prisma.eventAttendee.findMany({
         where: {
             eventId,
-            status: 'ACCEPTED'
+            status: 'ACCEPTED',
         },
         include: {
-            user: true
-        }
+            user: true,
+        },
     })
 
     const games = await prisma.game.findMany({
         where: {
-            eventId
+            eventId,
         },
         include: {
             players: {
                 include: {
-                    user: true
+                    user: true,
                 },
                 orderBy: {
-                    index: 'asc'
-                }
-            }
+                    index: 'asc',
+                },
+            },
         },
         orderBy: {
-            id: 'desc'
-        }
+            id: 'desc',
+        },
     })
 
     return { joinRequestStatus: joinRequest?.status, games, attendees }

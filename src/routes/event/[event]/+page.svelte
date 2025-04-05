@@ -17,8 +17,8 @@
         state: computeState({
             players: game.players.map((player) => player.user),
             ruleset: data.event.ruleset,
-            actions: game.actions
-        })
+            actions: game.actions,
+        }),
     }))
 
     $: currentPage = +($page.url.searchParams.get('page') ?? 1)

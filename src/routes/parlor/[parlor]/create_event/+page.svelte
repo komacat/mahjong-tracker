@@ -50,7 +50,7 @@
 
         const response = await fetch(`create_event`, {
             method: 'POST',
-            body
+            body,
         })
 
         const json = await response.json()
@@ -131,12 +131,12 @@
                     values={[
                         {
                             value: 'manual',
-                            label: 'Manual'
+                            label: 'Manual',
                         },
                         {
                             value: 'auto',
-                            label: 'Auto Approve'
-                        }
+                            label: 'Auto Approve',
+                        },
                     ]}
                     selected={formData?.joinPolicy?.toString()}
                 />

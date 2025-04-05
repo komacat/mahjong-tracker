@@ -36,7 +36,7 @@ export const POST = async ({ params, request }) => {
 
     const joinPolicy = {
         type: joinPolicyType,
-        until: joinPolicyUntil
+        until: joinPolicyUntil,
     }
 
     if (!validateJoinPolicy(joinPolicy)) {
@@ -50,8 +50,8 @@ export const POST = async ({ params, request }) => {
             description: data.get('description')?.toString() ?? '',
             parlorId: +(params.parlor ?? NaN),
             rulesetId,
-            joinPolicy
-        }
+            joinPolicy,
+        },
     })
 
     return new Response(JSON.stringify({ eventId: event.id }))

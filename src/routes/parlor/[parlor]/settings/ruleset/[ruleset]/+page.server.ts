@@ -16,8 +16,8 @@ export const load = async ({ params }) => {
 
     const ruleset = await prisma.ruleset.findUnique({
         where: {
-            id: rulesetId
-        }
+            id: rulesetId,
+        },
     })
 
     if (ruleset == null || ruleset.parlorId !== parlorId) {

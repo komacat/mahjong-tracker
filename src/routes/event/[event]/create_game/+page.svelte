@@ -96,7 +96,7 @@
 
         const response = await fetch('create_game', {
             method: 'POST',
-            body
+            body,
         })
 
         if (response.ok) {

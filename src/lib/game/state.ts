@@ -51,7 +51,7 @@ function rotate<T>(array: T[], shift: number): T[] {
 export function canPassDealership({
     ruleset,
     state,
-    actions
+    actions,
 }: {
     ruleset: Ruleset
     state: State
@@ -102,7 +102,7 @@ export function calculateRonPayment({
     ruleset,
     state,
     loser,
-    scores
+    scores,
 }: {
     ruleset: Ruleset
     state: State
@@ -190,7 +190,7 @@ export function calculateRonPayment({
 
         payments[winner] = {
             payment,
-            fromPot: pot
+            fromPot: pot,
         }
     }
 
@@ -200,7 +200,7 @@ export function calculateRonPayment({
 export const calculateTsumoPayment = ({
     ruleset,
     state,
-    scores
+    scores,
 }: {
     ruleset: Ruleset
     state: State
@@ -234,7 +234,7 @@ export const calculateTsumoPayment = ({
                 return [loser, payment]
             })
         ),
-        fromPot: pot
+        fromPot: pot,
     }
 }
 
@@ -243,7 +243,7 @@ export const computeState = wrapCatching(
         user,
         players,
         ruleset,
-        actions
+        actions,
     }: {
         user?: User | null
         players: User[]
@@ -270,7 +270,7 @@ export const computeState = wrapCatching(
         const state: State = {
             round: 0,
             match: {
-                state: 'RUNNING'
+                state: 'RUNNING',
             },
             richi: 0,
             repeat: 0,
@@ -280,11 +280,11 @@ export const computeState = wrapCatching(
                     score: ruleset.startScore,
                     penalty: 0,
                     wind: i,
-                    richi: false
+                    richi: false,
                 })),
                 players.length - playerShiftIndex
             ),
-            history: []
+            history: [],
         }
 
         for (const action of actions) {
@@ -342,7 +342,7 @@ export const computeState = wrapCatching(
                         ruleset,
                         state,
                         loser: action.loser,
-                        scores: action.scores
+                        scores: action.scores,
                     })
 
                     state.history.push({
@@ -362,8 +362,8 @@ export const computeState = wrapCatching(
                                 (player.richi ? 1000 : 0),
                             wind: player.wind,
                             richi: player.richi,
-                            chonbo: false
-                        }))
+                            chonbo: false,
+                        })),
                     })
 
                     let repeat = false
@@ -414,7 +414,7 @@ export const computeState = wrapCatching(
                     const payments = calculateTsumoPayment({
                         ruleset,
                         state,
-                        scores: action.scores
+                        scores: action.scores,
                     })
 
                     state.history.push({
@@ -433,8 +433,8 @@ export const computeState = wrapCatching(
                                 (player.richi ? 1000 : 0),
                             wind: player.wind,
                             richi: player.richi,
-                            chonbo: false
-                        }))
+                            chonbo: false,
+                        })),
                     })
 
                     for (const [loser, payment] of Object.entries(payments.payments)) {
@@ -489,8 +489,8 @@ export const computeState = wrapCatching(
                                     : -tenpaiFeePaid) - (player.richi ? 1000 : 0),
                             wind: player.wind,
                             richi: player.richi,
-                            chonbo: false
-                        }))
+                            chonbo: false,
+                        })),
                     })
 
                     for (const player of state.players) {
@@ -641,8 +641,8 @@ export const computeState = wrapCatching(
                             score: points[player.user.id],
                             wind: player.wind,
                             richi: false,
-                            chonbo: player.user.id === action.player
-                        }))
+                            chonbo: player.user.id === action.player,
+                        })),
                     })
 
                     for (const player of state.players) {
@@ -752,8 +752,8 @@ export const computeState = wrapCatching(
                                     100 +
                                     uma[i] * 10
                             ),
-                            penalty: player.penalty / 100
-                        }))
+                            penalty: player.penalty / 100,
+                        })),
                 }
             }
         }
