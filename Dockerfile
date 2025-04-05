@@ -1,4 +1,5 @@
 FROM node:alpine AS builder
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
@@ -9,6 +10,7 @@ RUN npm run build
 RUN npm prune --production
 
 FROM node:alpine
+RUN apk add --no-cache openssl
 WORKDIR /app
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/

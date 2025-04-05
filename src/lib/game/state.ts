@@ -4,17 +4,17 @@ import type { Ruleset, User } from '@prisma/client'
 export type State = {
     round: number
     match:
-        | {
-              state: 'RUNNING'
-          }
-        | {
-              state: 'ENDED'
-              result: {
-                  player: string
-                  soten: number
-                  penalty: number
-              }[]
-          }
+    | {
+        state: 'RUNNING'
+    }
+    | {
+        state: 'ENDED'
+        result: {
+            player: string
+            soten: number
+            penalty: number
+        }[]
+    }
     richi: number
     repeat: number
     players: {
@@ -354,11 +354,11 @@ export const computeState = wrapCatching(
                             score:
                                 (player.user.id === action.loser
                                     ? -Object.entries(payments).reduce(
-                                          (acc, [, { payment }]) => acc + payment,
-                                          0
-                                      )
+                                        (acc, [, { payment }]) => acc + payment,
+                                        0
+                                    )
                                     : (payments[player.user.id]?.payment ?? 0) +
-                                      (payments[player.user.id]?.fromPot ?? 0)) -
+                                    (payments[player.user.id]?.fromPot ?? 0)) -
                                 (player.richi ? 1000 : 0),
                             wind: player.wind,
                             richi: player.richi,
@@ -426,9 +426,9 @@ export const computeState = wrapCatching(
                             score:
                                 (player.user.id === action.winner
                                     ? Object.entries(payments.payments).reduce(
-                                          (acc, [, payment]) => acc + payment,
-                                          0
-                                      ) + payments.fromPot
+                                        (acc, [, payment]) => acc + payment,
+                                        0
+                                    ) + payments.fromPot
                                     : -payments.payments[player.user.id]) -
                                 (player.richi ? 1000 : 0),
                             wind: player.wind,
@@ -543,11 +543,11 @@ export const computeState = wrapCatching(
                             const score =
                                 player.wind === 0
                                     ? ruleset.scores.dealer.tsumo.find(
-                                          ([name]) => name === chonbo.name
-                                      )?.[1]
+                                        ([name]) => name === chonbo.name
+                                    )?.[1]
                                     : ruleset.scores.nonDealer.tsumo.find(
-                                          ([name]) => name === chonbo.name
-                                      )?.[1]
+                                        ([name]) => name === chonbo.name
+                                    )?.[1]
 
                             if (score == null || Array.isArray(score)) {
                                 throw new Error('Chonbo score not found')
@@ -747,12 +747,12 @@ export const computeState = wrapCatching(
                                     ruleset.returnScore +
                                     (i === 0
                                         ? (ruleset.player === 'FOUR' ? 4 : 3) *
-                                          (ruleset.returnScore - ruleset.startScore)
+                                        (ruleset.returnScore - ruleset.startScore)
                                         : 0)) /
-                                    100 +
-                                    uma[i] * 10
+                                100 +
+                                uma[i] * 10
                             ),
-                            penalty: player.penalty,
+                            penalty: player.penalty / 100,
                         })),
                 }
             }

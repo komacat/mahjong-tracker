@@ -838,7 +838,7 @@
                             <p class="font-bold">Result</p>
                             <div class="grid grid-cols-2 gap-2">
                                 {#each state.match.result as result}
-                                    {@const score = Math.round(result.soten + result.penalty) / 10}
+                                    {@const score = Math.round(result.soten - result.penalty) / 10}
                                     <p class="flex flex-row items-center space-x-2">
                                         <span class="space-x-2 truncate rounded p-1">
                                             {state.players.find(
