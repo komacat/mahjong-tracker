@@ -6,11 +6,11 @@ export const load = (async ({ cookies }) => {
 
     if (!sessionId) {
         return {
-            user: null
+            user: null,
         }
     }
 
     return {
-        user: await getUser(sessionId)
+        user: await getUser(sessionId),
     }
 }) satisfies LayoutServerLoad

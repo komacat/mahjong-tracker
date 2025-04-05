@@ -14,7 +14,7 @@ const rounds = [
     '北1',
     '北2',
     '北3',
-    '北4'
+    '北4',
 ]
 export const convertRound = (index: number) => rounds[index]
 export const convertWind = (index: number) => '東南西北'.charAt(index) as '東' | '南' | '西' | '北'

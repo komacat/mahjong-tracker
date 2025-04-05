@@ -4,11 +4,11 @@ import type { PageServerLoad } from './$types'
 export const load = (async ({ params }) => {
     const rulesets = await prisma.ruleset.findMany({
         where: {
-            parlorId: +(params.parlor ?? NaN)
-        }
+            parlorId: +(params.parlor ?? NaN),
+        },
     })
 
     return {
-        rulesets
+        rulesets,
     }
 }) satisfies PageServerLoad

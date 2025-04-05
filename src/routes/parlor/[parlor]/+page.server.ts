@@ -11,8 +11,8 @@ export const load = (async ({ params }) => {
 
     const events = await prisma.event.findMany({
         where: {
-            parlorId
-        }
+            parlorId,
+        },
     })
 
     return { events }

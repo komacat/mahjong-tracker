@@ -20,13 +20,13 @@
 
     let uma: PrismaJson.Uma = {
         type: 'simple',
-        uma: [10, 5, -5, -10]
+        uma: [10, 5, -5, -10],
     }
 
     let chonbo: PrismaJson.Chonbo = {
         type: 'score',
         name: 'Mangan',
-        affectsScore: true
+        affectsScore: true,
     }
 
     let error = ''
@@ -65,7 +65,7 @@
 
         fetch('create', {
             method: 'POST',
-            body: formData
+            body: formData,
         }).then(async (res) => {
             if (res.ok) {
                 window.history.back()
@@ -196,12 +196,12 @@
                                     type: 'floating',
                                     A: [15, 5, -5, -15],
                                     B: [15, 5, 0, -20],
-                                    C: [20, 0, -5, -15]
+                                    C: [20, 0, -5, -15],
                                 }
                             } else {
                                 uma = {
                                     type: 'simple',
-                                    uma: [15, 5, -5, -15]
+                                    uma: [15, 5, -5, -15],
                                 }
                             }
                         }}
@@ -789,13 +789,13 @@
                                         type: 'custom',
                                         dealer: {
                                             toDealer: 0,
-                                            toNonDealer: 4000
+                                            toNonDealer: 4000,
                                         },
                                         nonDealer: {
                                             toDealer: 4000,
-                                            toNonDealer: 2000
+                                            toNonDealer: 2000,
                                         },
-                                        affectsScore: true
+                                        affectsScore: true,
                                     }
                                 }}
                                 class="flex-1 rounded-lg border py-4 text-sm"

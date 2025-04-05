@@ -27,7 +27,7 @@
         ruleset.returnScore = 30000
         ruleset.uma = {
             type: 'simple',
-            uma: [15, 5, -5, -15]
+            uma: [15, 5, -5, -15],
         }
         ruleset.honba = 300
         ruleset.tenpaiFee = 3000
@@ -44,7 +44,7 @@
         ruleset.returnScore = 40000
         ruleset.uma = {
             type: 'simple',
-            uma: [15, 0, -15, 0]
+            uma: [15, 0, -15, 0],
         }
         ruleset.honba = 1000
         ruleset.tenpaiFee = 2000
@@ -55,14 +55,14 @@
         type: 'floating',
         A: [30, 0, -10, -20],
         B: [20, 10, -10, -20],
-        C: [20, 10, 0, -30]
+        C: [20, 10, 0, -30],
     }
 
     const defaultThreeFloatingUma: PrismaJson.Uma = {
         type: 'floating',
         A: [30, -10, -20, 0],
         B: [15, 0, -15, 0],
-        C: [0, 0, 0, 0]
+        C: [0, 0, 0, 0],
     }
 </script>
 
@@ -156,7 +156,7 @@
                 } else {
                     ruleset.uma = {
                         type: 'simple',
-                        uma: ruleset.player === 'THREE' ? [15, 0, -15, 0] : [15, 5, -5, -15]
+                        uma: ruleset.player === 'THREE' ? [15, 0, -15, 0] : [15, 5, -5, -15],
                     }
                 }
             }}
@@ -643,13 +643,13 @@
                             type: 'custom',
                             dealer: {
                                 toDealer: 0,
-                                toNonDealer: 4000
+                                toNonDealer: 4000,
                             },
                             nonDealer: {
                                 toDealer: 4000,
-                                toNonDealer: 2000
+                                toNonDealer: 2000,
                             },
-                            affectsScore: true
+                            affectsScore: true,
                         }
                     }}
                     class="flex-1 rounded-lg border py-4 text-sm"

@@ -11,7 +11,7 @@ import {
     Players,
     Record,
     RenchanPolicy,
-    TiebreakerPolicy
+    TiebreakerPolicy,
 } from '@prisma/client'
 import { error } from '@sveltejs/kit'
 
@@ -307,8 +307,8 @@ export const POST = async ({ params, request }) => {
             suddenDeath,
             calledGame,
             note: data.get('note')?.toString() ?? '',
-            parlorId
-        }
+            parlorId,
+        },
     })
 
     return new Response(JSON.stringify({ id: ruleset.id }))

@@ -17,8 +17,8 @@ export const DELETE = async ({ params, request }) => {
 
     await prisma.event.delete({
         where: {
-            id: eventId
-        }
+            id: eventId,
+        },
     })
 
     return new Response(null)

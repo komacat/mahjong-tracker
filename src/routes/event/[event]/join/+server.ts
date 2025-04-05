@@ -26,8 +26,8 @@ export const POST = (async ({ cookies, params, request }) => {
 
     const event = await prisma.event.findUnique({
         where: {
-            id: eventID
-        }
+            id: eventID,
+        },
     })
 
     if (event == null) {
@@ -38,25 +38,25 @@ export const POST = (async ({ cookies, params, request }) => {
         where: {
             userId_eventId: {
                 userId: user.id,
-                eventId: event.id
-            }
+                eventId: event.id,
+            },
         },
         update: {
-            status: 'PENDING'
+            status: 'PENDING',
         },
         create: {
             status: 'PENDING',
             user: {
                 connect: {
-                    id: user.id
-                }
+                    id: user.id,
+                },
             },
             event: {
                 connect: {
-                    id: event.id
-                }
-            }
-        }
+                    id: event.id,
+                },
+            },
+        },
     })
 
     return new Response()

@@ -29,12 +29,12 @@ export const POST = async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
+                        eventId,
+                    },
                 },
                 data: {
-                    status: 'ACCEPTED'
-                }
+                    status: 'ACCEPTED',
+                },
             })
             break
         case 'reject':
@@ -42,12 +42,12 @@ export const POST = async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
+                        eventId,
+                    },
                 },
                 data: {
-                    status: 'REJECTED'
-                }
+                    status: 'REJECTED',
+                },
             })
             break
         case 'remove':
@@ -55,9 +55,9 @@ export const POST = async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
-                }
+                        eventId,
+                    },
+                },
             })
             break
         default:

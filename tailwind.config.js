@@ -5,13 +5,13 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Montserrat'],
-                mj: ['"LXGW WenKai Mono TC"']
+                mj: ['"LXGW WenKai Mono TC"'],
             },
             gridTemplateColumns: {
                 leaderboard: 'auto minmax(0, 1fr) auto auto',
-                gamescore: 'auto minmax(0, 1fr) auto'
-            }
-        }
+                gamescore: 'auto minmax(0, 1fr) auto',
+            },
+        },
     },
-    plugins: []
+    plugins: [],
 }

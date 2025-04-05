@@ -11,18 +11,18 @@ async function main() {
         include: {
             event: {
                 include: {
-                    ruleset: true
-                }
+                    ruleset: true,
+                },
             },
             players: {
                 include: {
-                    user: true
+                    user: true,
                 },
                 orderBy: {
-                    index: 'asc'
-                }
-            }
-        }
+                    index: 'asc',
+                },
+            },
+        },
     })
 
     for (const game of games) {
@@ -34,7 +34,7 @@ async function main() {
             user: null,
             players: game.players.map((it) => it.user),
             ruleset: game.event.ruleset,
-            actions: sanitizedActions
+            actions: sanitizedActions,
         })
 
         if (!sanitizedState.ok) {
@@ -46,7 +46,7 @@ async function main() {
             user: null,
             players: game.players.map((it) => it.user),
             ruleset: game.event.ruleset,
-            actions: game.actions
+            actions: game.actions,
         })
             .onFailure((e) => {
                 console.error(e)
@@ -67,7 +67,7 @@ async function main() {
                 timerState = {
                     state: 'running',
                     startedAt: originalState.match.startedAt.toISO(),
-                    pausedBy: originalState.match.pausedBy.toISO()
+                    pausedBy: originalState.match.pausedBy.toISO(),
                 }
                 break
             case 'PAUSED':
@@ -75,7 +75,7 @@ async function main() {
                     state: 'paused',
                     startedAt: originalState.match.startedAt.toISO(),
                     pausedAt: originalState.match.pausedAt.toISO(),
-                    pausedBy: originalState.match.pausedBy.toISO()
+                    pausedBy: originalState.match.pausedBy.toISO(),
                 }
                 break
             case 'ENDED':
@@ -83,19 +83,19 @@ async function main() {
                     state: 'ended',
                     startedAt: originalState.match.startedAt.toISO(),
                     pausedBy: Duration.fromMillis(0).toISO(),
-                    endedAt: originalState.match.endedAt.toISO()
+                    endedAt: originalState.match.endedAt.toISO(),
                 }
                 break
         }
 
         await prisma.game.update({
             where: {
-                id: game.id
+                id: game.id,
             },
             data: {
                 actions: sanitizedActions,
-                timer: timerState
-            }
+                timer: timerState,
+            },
         })
     }
 }

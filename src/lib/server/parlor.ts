@@ -6,7 +6,7 @@ export function registerParlor({
     location,
     owner,
     website,
-    note
+    note,
 }: {
     name: string
     location: string
@@ -20,8 +20,8 @@ export function registerParlor({
             location,
             owner,
             website,
-            note
-        }
+            note,
+        },
     })
 }
 
@@ -30,7 +30,7 @@ export async function listParlors() {
         (await prisma.parlor.findMany()).map(async (parlor) => {
             return {
                 ...parlor,
-                ownerInfo: await getUserById(parlor.owner)
+                ownerInfo: await getUserById(parlor.owner),
             }
         })
     )
@@ -45,6 +45,6 @@ export async function getParlor(id: number) {
 
     return {
         ...parlor,
-        ownerInfo: await getUserById(parlor.owner)
+        ownerInfo: await getUserById(parlor.owner),
     }
 }
