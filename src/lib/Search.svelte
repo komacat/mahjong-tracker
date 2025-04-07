@@ -38,7 +38,7 @@
             {#if searchResult.length > 0}
                 {#each searchResult as user}
                     <button
-                        on:mousedown={async () => join(user.id)}
+                        on:mousedown={() => join(user.id)}
                         class="flex flex-row items-center space-x-2 py-4"
                     >
                         <UserAvatar {user} />
