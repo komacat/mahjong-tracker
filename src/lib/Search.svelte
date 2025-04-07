@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { EventAttendee, User } from '@prisma/client'
     import UserAvatar from './UserAvatar.svelte';
-	import type { PageData } from './$types'
+    import type { PageData } from './$types'
     
     export let data: PageData;
     export let join: (user: string) => Promise<void>;
