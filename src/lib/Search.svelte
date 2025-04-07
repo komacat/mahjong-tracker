@@ -1,16 +1,18 @@
 <script lang="ts">
     import type { EventAttendee, User } from '@prisma/client'
     import UserAvatar from './UserAvatar.svelte';
+	import type { PageData } from './$types'
     
-    export let usersList: User[] = []
-    export let attendees: EventAttendee[] = []
+    export let data: PageData;
     export let join: (user: string) => Promise<void>;
+
+    let usersList: User[] = data.users
 
     let query: string = ""
 
     function search(query: string): User[] {
         return usersList.filter(user => {
-            const attendee = attendees.find(attendee => attendee.userId === user.id)
+            const attendee = data.attendee.find((attendee: EventAttendee) => attendee.userId === user.id)
             return (
             user.username.toLowerCase().includes(query.toLowerCase()) &&
             (!attendee || (attendee.status === 'REJECTED'))

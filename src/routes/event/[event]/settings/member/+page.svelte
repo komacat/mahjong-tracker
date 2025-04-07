@@ -4,12 +4,8 @@
 	import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
 	import UserAvatar from '$lib/UserAvatar.svelte'
 	import Search from '$lib/Search.svelte'
-	import type { User } from '@prisma/client'
 
 	export let data: PageData
-	let usersList: User[] = data.users
-	let attendees = data.attendee
-	$: attendees = data.attendee
 
 	export async function join(user: string) {
 		window.grecaptcha.ready(() => {
@@ -58,7 +54,7 @@
 		<h2 class="text-xl font-semibold">
 			Add Player
 		</h2>
-		<Search {usersList} bind:attendees {join}/>
+		<Search bind:data {join}/>
 	</section>
 	<section>
 		<h2 class="p-4 text-xl font-semibold">
