@@ -1,9 +1,9 @@
-import { error } from "@sveltejs/kit";
-import type { LayoutServerLoad } from "./$types";
-import prisma from "$lib/server/prisma";
+import { error } from '@sveltejs/kit'
+import type { LayoutServerLoad } from './$types'
+import prisma from '$lib/server/prisma'
 
 export const load = (async ({ params }) => {
-    const gameId = +(params.game ?? NaN);
+    const gameId = +(params.game ?? NaN)
 
     if (isNaN(gameId)) {
         error(404, 'Game not found')
@@ -11,23 +11,23 @@ export const load = (async ({ params }) => {
 
     const game = await prisma.game.findUnique({
         where: {
-            id: gameId
+            id: gameId,
         },
         include: {
             event: {
                 include: {
-                    ruleset: true
-                }
+                    ruleset: true,
+                },
             },
             players: {
                 include: {
-                    user: true
+                    user: true,
                 },
                 orderBy: {
-                    index: 'asc'
-                }
-            }
-        }
+                    index: 'asc',
+                },
+            },
+        },
     })
 
     if (game == null) {
@@ -35,4 +35,4 @@ export const load = (async ({ params }) => {
     }
 
     return { game }
-}) satisfies LayoutServerLoad;
+}) satisfies LayoutServerLoad

@@ -1,11 +1,21 @@
-import { generateScoringSheet } from "$lib/scoring"
-import { validateCaptcha } from "$lib/server/captcha"
-import prisma from "$lib/server/prisma"
-import { validateChonbo, validateScoring, validateUma } from "$lib/validator"
-import { AllLastPolicy, EndgamePolicy, GameLength, MultiRonHonbaPolicy, MultiRonPotPolicy, Players, Record, RenchanPolicy, TiebreakerPolicy } from "@prisma/client"
-import { error } from "@sveltejs/kit"
+import { generateScoringSheet } from '$lib/scoring'
+import { validateCaptcha } from '$lib/server/captcha'
+import prisma from '$lib/server/prisma'
+import { validateChonbo, validateScoring, validateUma } from '$lib/validator'
+import {
+    AllLastPolicy,
+    EndgamePolicy,
+    GameLength,
+    MultiRonHonbaPolicy,
+    MultiRonPotPolicy,
+    Players,
+    Record,
+    RenchanPolicy,
+    TiebreakerPolicy,
+} from '@prisma/client'
+import { error } from '@sveltejs/kit'
 
-export const POST = (async ({ params, request }) => {
+export const POST = async ({ params, request }) => {
     const data = await request.formData()
 
     if (!validateCaptcha(data.get('token')?.toString())) {
@@ -96,8 +106,8 @@ export const POST = (async ({ params, request }) => {
     }
 
     if (
-        player === Players.FOUR && honba % 300 !== 0 ||
-        player === Players.THREE && scoring.tsumozon && honba % 300 !== 0
+        (player === Players.FOUR && honba % 300 !== 0) ||
+        (player === Players.THREE && scoring.tsumozon && honba % 300 !== 0)
     ) {
         error(400, 'Honba must be a multiple of 300')
     }
@@ -237,7 +247,7 @@ export const POST = (async ({ params, request }) => {
 
     const nagashiScore = scoringSheet.dealer.tsumo.find(([name]) => name === nagashi)?.[1]
 
-    if (nagashi == null || nagashi !== 'none' && nagashiScore == null) {
+    if (nagashi == null || (nagashi !== 'none' && nagashiScore == null)) {
         error(400, 'Invalid nagashi')
     }
 
@@ -249,8 +259,14 @@ export const POST = (async ({ params, request }) => {
         error(400, 'Invalid chonbo')
     }
 
-    const suddenDeath = data.get('suddenDeath')?.toString() === 'on' ? +(data.get('suddenDeathPoint')?.toString() ?? -1) : null
-    const calledGame = data.get('calledGame')?.toString() === 'on' ? +(data.get('calledGamePoint')?.toString() ?? -1) : null
+    const suddenDeath =
+        data.get('suddenDeath')?.toString() === 'on'
+            ? +(data.get('suddenDeathPoint')?.toString() ?? -1)
+            : null
+    const calledGame =
+        data.get('calledGame')?.toString() === 'on'
+            ? +(data.get('calledGamePoint')?.toString() ?? -1)
+            : null
 
     if (suddenDeath != null && suddenDeath < 0) {
         error(400, 'Invalid sudden death point')
@@ -291,9 +307,9 @@ export const POST = (async ({ params, request }) => {
             suddenDeath,
             calledGame,
             note: data.get('note')?.toString() ?? '',
-            parlorId
-        }
+            parlorId,
+        },
     })
 
     return new Response(JSON.stringify({ id: ruleset.id }))
-})
+}

@@ -1,9 +1,9 @@
-import { error } from "@sveltejs/kit";
-import prisma from "$lib/server/prisma";
-import { validateJoinPolicy } from "$lib/validator";
-import { validateCaptcha } from "$lib/server/captcha";
+import { error } from '@sveltejs/kit'
+import prisma from '$lib/server/prisma'
+import { validateJoinPolicy } from '$lib/validator'
+import { validateCaptcha } from '$lib/server/captcha'
 
-export const POST = (async ({ params, request }) => {
+export const POST = async ({ params, request }) => {
     const data = await request.formData()
 
     if (!validateCaptcha(data.get('token')?.toString())) {
@@ -24,7 +24,10 @@ export const POST = (async ({ params, request }) => {
 
     const rulesetId = +(data.get('ruleset')?.toString() ?? NaN)
 
-    if (isNaN(rulesetId) || (await prisma.ruleset.findUnique({ where: { id: rulesetId } }))?.parlorId !== parlorId) {
+    if (
+        isNaN(rulesetId) ||
+        (await prisma.ruleset.findUnique({ where: { id: rulesetId } }))?.parlorId !== parlorId
+    ) {
         error(400, 'Invalid ruleset')
     }
 
@@ -33,7 +36,7 @@ export const POST = (async ({ params, request }) => {
 
     const joinPolicy = {
         type: joinPolicyType,
-        until: joinPolicyUntil
+        until: joinPolicyUntil,
     }
 
     if (!validateJoinPolicy(joinPolicy)) {
@@ -47,9 +50,9 @@ export const POST = (async ({ params, request }) => {
             description: data.get('description')?.toString() ?? '',
             parlorId: +(params.parlor ?? NaN),
             rulesetId,
-            joinPolicy
-        }
+            joinPolicy,
+        },
     })
 
     return new Response(JSON.stringify({ eventId: event.id }))
-})
+}

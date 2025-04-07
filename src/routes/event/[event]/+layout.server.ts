@@ -1,27 +1,27 @@
-import prisma from '$lib/server/prisma';
-import { error } from '@sveltejs/kit';
-import type { LayoutServerLoad } from "./$types";
+import prisma from '$lib/server/prisma'
+import { error } from '@sveltejs/kit'
+import type { LayoutServerLoad } from './$types'
 
 export const load = (async ({ params }) => {
-    const eventId = +(params.event ?? NaN);
+    const eventId = +(params.event ?? NaN)
 
     if (isNaN(eventId)) {
-        error(404, 'Event not found');
+        error(404, 'Event not found')
     }
 
     const event = await prisma.event.findUnique({
         where: {
-            id: eventId
+            id: eventId,
         },
         include: {
             ruleset: true,
-            parlor: true
-        }
-    });
+            parlor: true,
+        },
+    })
 
     if (event == null) {
-        error(404, 'Event not found');
+        error(404, 'Event not found')
     }
 
     return { event }
-}) satisfies LayoutServerLoad;
+}) satisfies LayoutServerLoad

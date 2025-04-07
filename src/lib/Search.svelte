@@ -14,10 +14,10 @@
         return usersList.filter(user => {
             const attendee = data.attendee.find((attendee: EventAttendee) => attendee.userId === user.id)
             return (
-            user.username.toLowerCase().includes(query.toLowerCase()) &&
-            (!attendee || (attendee.status === 'REJECTED'))
-        );
-        });
+                user.username.toLowerCase().includes(query.toLowerCase()) &&
+                (!attendee || attendee.status === 'REJECTED')
+            )
+        })
     }
 
     $: searchResult = search(query)
@@ -30,8 +30,10 @@
             bind:value={query}
             placeholder="Search by Discord Username"
             class="peer w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            on:focus={() => {searchResult = search(query)}}
-            />
+            on:focus={() => {
+                searchResult = search(query)
+            }}
+        />
         <div
             class="absolute -left-1 top-10 hidden w-[calc(100%-0.5rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
         >
