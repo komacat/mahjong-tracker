@@ -25,8 +25,13 @@
 
     let state: State | null
 
+    let playerIndex =
+        data.user != null
+            ? data.game.players.findIndex((player) => player.userId === data.user!.id)
+            : 0
+
     $: state = computeState({
-        user: data.user,
+        user: data.game.players[playerIndex]?.user,
         players: data.game.players.map((player) => player.user),
         ruleset: data.game.event.ruleset,
         actions: data.game.actions,
@@ -753,6 +758,14 @@
             {/if}
             {#if displayPoint[9]}
                 <p class="absolute left-[31%] top-[45%]">{displayPoint[9]}</p>
+            {/if}
+            {#if action == null}
+                <button
+                    class="absolute bottom-4 left-4 flex h-20 w-20 items-center justify-center rounded-lg border border-white"
+                    on:click={() => (playerIndex = (playerIndex + 1) % state.players.length)}
+                >
+                    <span class="material-symbols-rounded text-4xl"> rotate_left </span>
+                </button>
             {/if}
         </section>
         {#if data.game.timer.state === 'waiting'}
