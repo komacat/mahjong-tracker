@@ -97,12 +97,12 @@ export async function registerGuest(username: string) {
             data: {
                 id: userId,
                 username: username,
-                avatar: 'https://cdn.discordapp.com/emojis/1235123039956500491.webp?size=96',
+                avatar: null,
             },
         });
     }
 
-    return;
+    return user;
 }
 
 export async function removeUserToken(sessionId: string) {

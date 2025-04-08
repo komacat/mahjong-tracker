@@ -23,6 +23,18 @@
     }
 
     $: searchResult = search(query)
+
+    async function addGuest(username: string) {
+        const response = await fetch('/api/guest/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: username,
+        })
+        const user: User = await response.json()
+        return user
+    }
 </script>
 
 <div class="py-4">
@@ -37,6 +49,10 @@
             }}
         />
         <button
+            on:click={async () => {
+                const guest = await addGuest(query)
+                join(guest.id)
+            }}
             type="button"
             class="material-symbols-rounded ml-auto flex flex-row items-center rounded-lg bg-blue-500 p-2 text-white"
         >
@@ -45,7 +61,7 @@
         <div
             class="absolute -left-1 top-10 hidden w-[calc(100%-4rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
         >
-            {#if searchResult.length > 0}
+            {#if searchResult.length > 1}
                 {#each searchResult as user}
                     <button
                         on:mousedown={() => join(user.id)}
