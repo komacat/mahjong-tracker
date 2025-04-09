@@ -35,6 +35,11 @@
         const user: User = await response.json()
         return user
     }
+
+    async function handleGuest() {
+        const guest = await addGuest(query)
+        join(guest.id)
+    }
 </script>
 
 <div class="py-4">
@@ -48,18 +53,8 @@
                 searchResult = search(query)
             }}
         />
-        <button
-            on:click={async () => {
-                const guest = await addGuest(query)
-                join(guest.id)
-            }}
-            type="button"
-            class="material-symbols-rounded ml-auto flex flex-row items-center rounded-lg bg-blue-500 p-2 text-white"
-        >
-            add</button
-        >
         <div
-            class="absolute -left-1 top-10 hidden w-[calc(100%-4rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
+            class="absolute -left-1 top-10 hidden w-[calc(100%-0.5rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
         >
             {#if searchResult.length > 1}
                 {#each searchResult as user}
@@ -71,9 +66,10 @@
                         <p>{user.username}</p>
                     </button>
                 {/each}
-            {:else}
-                <p>No result</p>
             {/if}
+            <button on:mousedown={handleGuest} class="flex flex-row items-center space-x-2 py-4">
+                <p>Add guest {query}</p>
+            </button>
         </div>
     </div>
 </div>
