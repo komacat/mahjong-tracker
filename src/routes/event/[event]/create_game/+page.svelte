@@ -11,6 +11,7 @@
     import { DateTime } from 'luxon'
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import { flip } from 'svelte/animate'
+    import { goto } from '$app/navigation'
 
     export let data: PageData
 
@@ -100,7 +101,8 @@
         })
 
         if (response.ok) {
-            window.history.back()
+            const gameId = await response.json()
+            goto(`/game/${gameId[0]}`)
         } else {
             const body = await response.json()
             error = body.message
