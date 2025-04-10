@@ -23,11 +23,8 @@
     $: searchResult = search(query)
 
     async function addGuest(username: string) {
-        const response = await fetch('/api/guest/register', {
+        const response = await fetch('/api/register_guest', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: username,
         })
         const user: User = await response.json()
@@ -37,6 +34,7 @@
     async function handleGuest() {
         const guest = await addGuest(query)
         join(guest.id)
+        query = ''
     }
 </script>
 

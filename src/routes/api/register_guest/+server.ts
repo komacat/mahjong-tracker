@@ -5,5 +5,5 @@ export const POST: RequestHandler = async ({ request }) => {
     const username = await request.text();
     const user = await registerGuest(username);
 
-    return new Response(JSON.stringify(user), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify(user));
 };
