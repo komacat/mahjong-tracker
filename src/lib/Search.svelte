@@ -1,18 +1,16 @@
 <script lang="ts">
     import type { EventAttendee, User } from '@prisma/client'
     import UserAvatar from './UserAvatar.svelte'
-    import type { PageData } from './$types'
 
-    export let data: PageData
+    export let usersList: User[]
+    export let attendees: EventAttendee[]
     export let join: (user: string) => Promise<void>
-
-    let usersList: User[] = data.users
 
     let query: string = ''
 
     function search(query: string): User[] {
-        return usersList.filter((user) => {
-            const attendee = data.attendee.find(
+        const creatur = usersList.filter((user) => {
+            const attendee = attendees.find(
                 (attendee: EventAttendee) => attendee.userId === user.id
             )
             return (
@@ -20,6 +18,8 @@
                 (!attendee || attendee.status === 'REJECTED')
             )
         })
+        console.log(query, creatur)
+        return creatur
     }
 
     $: searchResult = search(query)
@@ -56,7 +56,7 @@
         <div
             class="absolute -left-1 top-10 hidden w-[calc(100%-0.5rem)] flex-col divide-y rounded-lg border border-gray-300 bg-gray-50 p-2 shadow-lg peer-focus:flex"
         >
-            {#if searchResult.length > 1}
+            {#if searchResult.length > 0}
                 {#each searchResult as user}
                     <button
                         on:mousedown={() => join(user.id)}
@@ -67,9 +67,14 @@
                     </button>
                 {/each}
             {/if}
-            <button on:mousedown={handleGuest} class="flex flex-row items-center space-x-2 py-4">
-                <p>Add guest {query}</p>
-            </button>
+            {#if query.length > 0}
+                <button
+                    on:mousedown={handleGuest}
+                    class="flex flex-row items-center space-x-2 py-4"
+                >
+                    <p>Add guest {query}</p>
+                </button>
+            {/if}
         </div>
     </div>
 </div>

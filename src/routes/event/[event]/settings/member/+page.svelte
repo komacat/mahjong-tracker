@@ -4,6 +4,7 @@
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import UserAvatar from '$lib/UserAvatar.svelte'
     import Search from '$lib/Search.svelte'
+    import type { EventAttendee, User } from '@prisma/client'
 
     export let data: PageData
 
@@ -52,7 +53,7 @@
     </section>
     <section class="p-4">
         <h2 class="text-xl font-semibold">Add Player</h2>
-        <Search bind:data {join} />
+        <Search usersList={data.users} attendees={data.attendee} {join} />
     </section>
     <section>
         <h2 class="p-4 text-xl font-semibold">
