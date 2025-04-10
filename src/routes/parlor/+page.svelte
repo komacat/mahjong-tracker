@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+	import UserAvatar from '$lib/UserAvatar.svelte'
 
 	export let data: PageData
 </script>
@@ -22,12 +23,9 @@
 						<p class="text-sm">{parlor.location}</p>
 						<p class="flex flex-row items-center text-sm">
 							<span>Owner: </span>
-							{#if parlor.ownerInfo}<img
-									class="ml-2 mr-1 inline h-4 w-4 rounded-full"
-									src="https://cdn.discordapp.com/avatars/{parlor.ownerInfo.id}/{parlor.ownerInfo
-										.avatar}.webp"
-									alt="avatar of {parlor.ownerInfo.username}"
-								/>{/if}
+							{#if parlor.ownerInfo}
+								<UserAvatar user={parlor.ownerInfo} />
+							{/if}
 							<span
 								>{#if parlor.ownerInfo}{parlor.ownerInfo.username}{:else}unknown user {parlor.owner}{/if}</span
 							>
