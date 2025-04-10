@@ -20,10 +20,10 @@
     </p>
     <p
         class="text-4xl"
-        class:text-red-500={compareTo != null && compareTo < score}
-        class:text-blue-500={compareTo != null && compareTo > score}
+        class:text-red-500={!richi && compareTo != null && compareTo > score}
+        class:text-blue-500={!richi && compareTo != null && compareTo < score}
     >
-        {compareTo != null ? (compareTo >= score ? '+' : '-') : ''}
+        {compareTo != null ? (compareTo <= score ? '+' : '-') : ''}
         {compareTo != null ? Math.abs(score - compareTo) / 100 : score / 100}
     </p>
 </div>
