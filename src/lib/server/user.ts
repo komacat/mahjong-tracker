@@ -1,6 +1,9 @@
 import type { User } from '@prisma/client'
 import { refreshToken } from './discord'
 import prisma from './prisma'
+import { v5 as uuidv5 } from 'uuid';
+
+const NAMESPACE_GUEST = "e17fa822-f705-43fc-beaa-dcd14e13c4e0"
 
 function registerUser({
     id,
@@ -31,6 +34,10 @@ export async function getUser(sessionId: string): Promise<User | null> {
 
 export async function getUserById(userId: string) {
     return prisma.user.findUnique({ where: { id: userId } })
+}
+
+export async function getAllUsers(): Promise<User[]> {
+    return await prisma.user.findMany()
 }
 
 export async function registerUserToken({
@@ -72,6 +79,30 @@ export async function registerUserToken({
             expiresAt,
         },
     })
+}
+
+async function generateGuestUUID(username: string) {
+    return uuidv5(username, NAMESPACE_GUEST)
+}
+
+export async function registerGuest(username: string) {
+    const userId = await generateGuestUUID(username);
+
+    let user = await prisma.user.findUnique({
+        where: { id: userId }
+    });
+
+    if (!user) {
+        user = await prisma.user.create({
+            data: {
+                id: userId,
+                username: username,
+                avatar: null,
+            },
+        });
+    }
+
+    return user;
 }
 
 export async function removeUserToken(sessionId: string) {
