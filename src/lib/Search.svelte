@@ -9,7 +9,7 @@
     let query: string = ''
 
     function search(query: string): User[] {
-        const creatur = usersList.filter((user) => {
+        return usersList.filter((user) => {
             const attendee = attendees.find(
                 (attendee: EventAttendee) => attendee.userId === user.id
             )
@@ -18,8 +18,6 @@
                 (!attendee || attendee.status === 'REJECTED')
             )
         })
-        console.log(query, creatur)
-        return creatur
     }
 
     $: searchResult = search(query)
@@ -67,7 +65,7 @@
                     </button>
                 {/each}
             {/if}
-            {#if query.length > 0}
+            {#if query.length > 0 && !usersList.some((user) => user.username === query)}
                 <button
                     on:mousedown={handleGuest}
                     class="flex flex-row items-center space-x-2 py-4"
