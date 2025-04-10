@@ -101,8 +101,12 @@
         })
 
         if (response.ok) {
-            const gameId = await response.json()
-            goto(`/game/${gameId[0]}`)
+            const gameIds = await response.json()
+            if (gameIds.length > 1) {
+                window.history.back()
+            } else {
+                goto(`/game/${gameIds[0]}`)
+            }
         } else {
             const body = await response.json()
             error = body.message
