@@ -73,7 +73,7 @@
     </section>
     <section>
         <h2 class="p-4 text-xl font-semibold">
-            Peding Join Requests ({data.attendee.filter(({ status }) => status === 'PENDING')
+            Pending Join Requests ({data.attendee.filter(({ status }) => status === 'PENDING')
                 .length})
         </h2>
         {#each data.attendee.filter(({ status }) => status === 'PENDING') as joinRequest}
