@@ -3,8 +3,27 @@
     import type { PageData } from './$types'
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import UserAvatar from '$lib/UserAvatar.svelte'
+    import Search from '$lib/Search.svelte'
+    import type { EventAttendee, User } from '@prisma/client'
 
     export let data: PageData
+
+    export async function join(user: string) {
+        window.grecaptcha.ready(() => {
+            window.grecaptcha
+                .execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
+                .then(async (token) => {
+                    await fetch(`/event/${data.event.id}/join`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            token,
+                            user,
+                        }),
+                    })
+                    invalidateAll()
+                })
+        })
+    }
 
     async function decision(user: string, action: 'accept' | 'reject' | 'remove') {
         window.grecaptcha.ready(() => {
@@ -31,6 +50,10 @@
 <main class="mx-auto max-w-2xl">
     <section class="p-4">
         <h1 class="text-2xl font-bold">{data.event.name} @ {data.event.parlor.name} Settings</h1>
+    </section>
+    <section class="p-4">
+        <h2 class="text-xl font-semibold">Add Player</h2>
+        <Search usersList={data.users} attendees={data.attendee} {join} />
     </section>
     <section>
         <h2 class="p-4 text-xl font-semibold">
