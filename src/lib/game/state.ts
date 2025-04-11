@@ -757,7 +757,6 @@ export const computeState = wrapCatching(
                 }
             }
         }
-
         return state
     }
 )

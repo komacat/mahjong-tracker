@@ -19,6 +19,7 @@
     import { DateTime, Duration } from 'luxon'
     import { onMount } from 'svelte'
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
+    import { io } from 'socket.io-client'
 
     export let data: PageData
     let error = ''
@@ -29,7 +30,6 @@
         data.user != null
             ? data.game.players.findIndex((player) => player.userId === data.user!.id)
             : 0
-
     $: state = computeState({
         user: data.game.players[playerIndex]?.user,
         players: data.game.players.map((player) => player.user),
@@ -539,6 +539,16 @@
                 })
         })
     }
+
+    const socket = io()
+
+    $: if (state) {
+        socket.emit('update', state);
+    }
+    
+    socket.on('update', () => {
+        invalidateAll();
+    })
 </script>
 
 <main class="mx-auto max-w-lg px-4">
