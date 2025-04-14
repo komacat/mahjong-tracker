@@ -15,10 +15,11 @@
     } from '$lib/game/state'
     import type { PageData } from './$types'
     import type { User } from '@prisma/client'
-    import { invalidateAll } from '$app/navigation'
+    import { invalidateAll, invalidate } from '$app/navigation'
     import { DateTime, Duration } from 'luxon'
     import { onMount } from 'svelte'
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
+    import { source } from 'sveltekit-sse'
 
     export let data: PageData
     let error = ''
@@ -95,7 +96,17 @@
         chonbo: ['Chonbo', 'bg-yellow-500'],
     }
 
+    function subscribe() {
+		const sse = new EventSource('/api/update');
+		sse.addEventListener('update', (event) => {
+            invalidateAll();
+        });
+		return () => sse.close();
+	}
+
     onMount(() => {
+        const unsubscribe = subscribe();
+        
         const timerUpdateInterval = setInterval(() => {
             switch (data.game.timer.state) {
                 case 'waiting': {
@@ -131,7 +142,7 @@
             }
         }, 200)
 
-        return () => clearInterval(timerUpdateInterval)
+        return () => { clearInterval(timerUpdateInterval); unsubscribe(); }
     })
 
     function displayRon() {
@@ -539,6 +550,7 @@
                 })
         })
     }
+
 </script>
 
 <main class="mx-auto max-w-lg px-4">
