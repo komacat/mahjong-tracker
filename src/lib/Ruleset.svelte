@@ -1,8 +1,12 @@
 <script lang="ts">
+    import { page } from '$app/stores'
+    import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import type { Ruleset } from '@prisma/client'
 
     export let ruleset: Ruleset
     export let readonly: boolean = false
+
+    let error = ''
 
     let textarea: HTMLTextAreaElement
 
@@ -11,7 +15,7 @@
         fixed30fu: boolean
         tsumozon: boolean
     } = { kiriage: true, fixed30fu: false, tsumozon: true }
-
+    
     function onNoteInput() {
         textarea.style.height = ''
         textarea.style.height = `min(${textarea.scrollHeight}px, 12rem)`
@@ -63,6 +67,32 @@
         A: [30, -10, -20, 0],
         B: [15, 0, -15, 0],
         C: [0, 0, 0, 0],
+    }
+
+    $: rulesetId = $page.url.pathname.split('/')[5];
+    $: parlorId = $page.url.pathname.split('/')[2];
+    $: console.log(ruleset)
+
+    async function saveRuleset() {
+        console.log(parlorId, rulesetId)
+        const token = await new Promise<string>((resolve, reject) => {
+            window.grecaptcha.ready(() => {
+                window.grecaptcha
+                    .execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'save' })
+                    .then(resolve)
+            });
+        });
+
+        fetch('/api/update_ruleset', {
+            method: 'POST',
+            body: JSON.stringify({token, ruleset, parlorId, rulesetId}),
+        }).then(async (res) => {
+            if (res.ok) {
+                window.history.back()
+            } else {
+                error = (await res.json()).message
+            }
+        })
     }
 </script>
 
@@ -812,5 +842,14 @@
             id="note"
             name="note"
         />
+    </div>
+    <div class="flex flex-row items-center space-x-4">
+        <p class="flex-1 text-end font-bold text-red-500">{error}</p>
+        <button
+            on:click={saveRuleset}
+            class="rounded-lg border border-gray-300 bg-blue-500 p-4 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
+        >
+            Save
+        </button>
     </div>
 </div>
