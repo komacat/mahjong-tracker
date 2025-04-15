@@ -2,7 +2,7 @@ import { UpdateEvent, update_events } from '$lib/stores/update'
 
 export function GET() {
     const event = new UpdateEvent()
-    update_events.push(event)
+    update_events.set(event.id, event)
 
     const stream = new ReadableStream({
         start(controller) {
@@ -11,8 +11,7 @@ export function GET() {
             })
         },
         cancel() {
-            const index = update_events.indexOf(event)
-            if (~index) update_events.splice(index, 1)
+            update_events.delete(event.id)
         },
     })
 
