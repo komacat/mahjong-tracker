@@ -97,16 +97,16 @@
     }
 
     function subscribe() {
-		const sse = new EventSource('/api/update');
-		sse.addEventListener('update', (event) => {
-            invalidateAll();
-        });
-		return () => sse.close();
-	}
+        const sse = new EventSource('/api/update')
+        sse.addEventListener('update', (event) => {
+            invalidateAll()
+        })
+        return () => sse.close()
+    }
 
     onMount(() => {
-        const unsubscribe = subscribe();
-        
+        const unsubscribe = subscribe()
+
         const timerUpdateInterval = setInterval(() => {
             switch (data.game.timer.state) {
                 case 'waiting': {
@@ -142,7 +142,10 @@
             }
         }, 200)
 
-        return () => { clearInterval(timerUpdateInterval); unsubscribe(); }
+        return () => {
+            clearInterval(timerUpdateInterval)
+            unsubscribe()
+        }
     })
 
     function displayRon() {
@@ -550,7 +553,6 @@
                 })
         })
     }
-
 </script>
 
 <main class="mx-auto max-w-lg px-4">

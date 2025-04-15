@@ -1,15 +1,15 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events'
 
 export class UpdateEvent extends EventEmitter {
-	notify() {
-		this.emit('update');
-	}
+    notify() {
+        this.emit('update')
+    }
 }
 
-export const update_events: UpdateEvent[] = [];
+export const update_events: UpdateEvent[] = []
 
 export function send_update() {
-	for (const event of update_events) {
-		event.notify();
-	}
+    for (const event of update_events) {
+        event.notify()
+    }
 }
