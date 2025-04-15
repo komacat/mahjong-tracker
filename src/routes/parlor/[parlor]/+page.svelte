@@ -1,7 +1,28 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
+    import { page } from '$app/stores'
     import type { PageData } from './$types'
 
     export let data: PageData
+
+    let error = ''
+
+    $: parlorId = $page.params.parlor
+
+    async function createEvent() {
+        console.log('awawaaa')
+        const response = await fetch(`${parlorId}/auth`, {
+            method: 'POST',
+        })
+
+        if (response.ok) {
+            goto(`${parlorId}/create_event`)
+        } else {
+            console.log('errrmmmm')
+            const body = await response.json()
+            error = body.message
+        }
+    }
 </script>
 
 <main class="mx-auto max-w-2xl p-4">
@@ -29,12 +50,13 @@
     <section>
         <div class="flex flex-row items-center justify-between">
             <h2 class="text-xl font-bold">Events</h2>
-            <a
-                href="{data.parlor.id}/create_event"
+            <button
+                type="button"
+                on:click={createEvent}
                 class="flex flex-row space-x-2 rounded-lg bg-blue-500 p-4 text-white"
             >
                 <span class="material-symbols-rounded">add</span> New Event
-            </a>
+            </button>
         </div>
         <div class="divide-y py-4">
             {#each data.events as event}
@@ -56,4 +78,7 @@
             {/each}
         </div>
     </section>
+    <div class="p-4">
+        <p class="flex-1 text-right font-bold text-red-500">{error}</p>
+    </div>
 </main>
