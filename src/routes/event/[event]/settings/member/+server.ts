@@ -27,12 +27,12 @@ export const POST = async ({ cookies, params, request }) => {
     const sessionId = getSessionId(cookies)
     const currentUser = await getUser(sessionId)
     if (!currentUser) {
-        throw error(401, 'Unauthorized to perform this action.')
+        error(401, 'Unauthorized to perform this action.')
     }
 
     const isAdmin = await isEventAdmin(currentUser.id, eventId)
     if (!isAdmin) {
-        throw error(401, 'Unauthorized to perform this action.')
+        error(401, 'Unauthorized to perform this action.')
     }
 
     const action = data.action
