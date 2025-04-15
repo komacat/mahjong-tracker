@@ -1,8 +1,11 @@
 import { error } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import { validateCaptcha } from '$lib/server/captcha'
+import { isEventAdmin } from '$lib/server/auth.js'
+import { getSessionId } from '$lib/server/session.js'
+import { getUser } from '$lib/server/user.js'
 
-export const POST = async ({ params, request }) => {
+export const POST = async ({ cookies, params, request }) => {
     const eventId = +(params.event ?? NaN)
 
     if (isNaN(eventId)) {
@@ -19,6 +22,17 @@ export const POST = async ({ params, request }) => {
 
     if (userId == null) {
         error(400, 'User ID is required')
+    }
+
+    const sessionId = getSessionId(cookies);
+    const currentUser = await getUser(sessionId);
+    if (!currentUser) {
+        throw error(401, 'Unauthorized to perform this action.');
+    }
+
+    const isAdmin = await isEventAdmin(currentUser.id, eventId)
+    if (!isAdmin) {
+        throw error(401, 'Unauthorized to perform this action.');
     }
 
     const action = data.action

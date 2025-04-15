@@ -4,7 +4,8 @@
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import UserAvatar from '$lib/UserAvatar.svelte'
     import Search from '$lib/Search.svelte'
-    import type { EventAttendee, User } from '@prisma/client'
+
+    let error = ''
 
     export let data: PageData
 
@@ -30,7 +31,7 @@
             window.grecaptcha
                 .execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
                 .then(async (token) => {
-                    await fetch('member', {
+                    const response = await fetch('member', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -41,7 +42,12 @@
                             action,
                         }),
                     })
-                    invalidateAll()
+                    if (response.ok) {
+                        invalidateAll()
+                    } else {
+                        const body = await response.json()
+                        error = body.message
+                    }
                 })
         })
     }
@@ -100,4 +106,7 @@
             </div>
         {/each}
     </section>
+    <div class="p-4">
+        <p class="ml-auto font-bold text-red-500">{error}</p>
+    </div>
 </main>
