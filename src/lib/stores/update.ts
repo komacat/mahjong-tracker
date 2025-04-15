@@ -13,10 +13,10 @@ export class UpdateEvent extends EventEmitter {
     }
 }
 
-export const update_events: Map<string, UpdateEvent> = new Map()
+export const updateEvents: Map<string, UpdateEvent> = new Map()
 
-export function send_update() {
-    for (const event of update_events.values()) {
+export function sendUpdate() {
+    for (const event of updateEvents.values()) {
         event.notify()
     }
 }

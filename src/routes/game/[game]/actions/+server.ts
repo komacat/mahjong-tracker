@@ -5,7 +5,7 @@ import prisma from '$lib/server/prisma'
 import { computeState } from '$lib/game/state'
 import { validateCaptcha } from '$lib/server/captcha'
 import { DateTime, Duration } from 'luxon'
-import { send_update } from '$lib/stores/update'
+import { sendUpdate } from '$lib/stores/update'
 
 export const GET = (async ({ params }) => {
     const gameId = +(params.game ?? NaN)
@@ -201,7 +201,7 @@ export const POST = async ({ params, request }) => {
             },
         })
     })
-    send_update()
+    sendUpdate()
     return new Response(null)
 }
 
@@ -275,6 +275,6 @@ export const DELETE = async ({ params, request }) => {
             },
         })
     })
-    send_update()
+    sendUpdate()
     return new Response(null)
 }

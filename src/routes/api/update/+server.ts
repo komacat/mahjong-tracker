@@ -1,8 +1,8 @@
-import { UpdateEvent, update_events } from '$lib/stores/update'
+import { UpdateEvent, updateEvents } from '$lib/stores/update'
 
 export function GET() {
     const event = new UpdateEvent()
-    update_events.set(event.id, event)
+    updateEvents.set(event.id, event)
 
     const stream = new ReadableStream({
         start(controller) {
@@ -11,7 +11,7 @@ export function GET() {
             })
         },
         cancel() {
-            update_events.delete(event.id)
+            updateEvents.delete(event.id)
         },
     })
 
