@@ -16,7 +16,7 @@ export class UpdateEvent extends EventEmitter {
 export const update_events: Map<string, UpdateEvent> = new Map()
 
 export function send_update() {
-    for (const [, event] of update_events) {
+    for (const event of update_events.values()) {
         event.notify()
     }
 }
