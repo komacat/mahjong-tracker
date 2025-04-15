@@ -10,7 +10,6 @@
     $: parlorId = $page.params.parlor
 
     async function createEvent() {
-        console.log('awawaaa')
         const response = await fetch(`${parlorId}/auth`, {
             method: 'POST',
         })
@@ -18,7 +17,6 @@
         if (response.ok) {
             goto(`${parlorId}/create_event`)
         } else {
-            console.log('errrmmmm')
             const body = await response.json()
             error = body.message
         }
