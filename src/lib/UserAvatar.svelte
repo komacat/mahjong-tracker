@@ -2,10 +2,11 @@
 	import type { User } from '@prisma/client'
 
 	export let user: User | undefined
+	export let size: number = 8
 </script>
 
 {#if user}
-	<div class="h-8 w-8 overflow-hidden rounded-full">
+	<div class="h-{size} w-{size} overflow-hidden rounded-full">
 		<object
 			data="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
 			type="image/webp"

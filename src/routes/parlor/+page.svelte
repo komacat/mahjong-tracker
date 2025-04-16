@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types'
 	import UserAvatar from '$lib/UserAvatar.svelte'
+	import type { PageData } from './$types'
 
 	export let data: PageData
 </script>
@@ -22,11 +22,11 @@
 						<h2 class="text-xl font-semibold">{parlor.name}</h2>
 						<p class="text-sm">{parlor.location}</p>
 						<p class="flex flex-row items-center text-sm">
-							<span>Owner: </span>
+							<span class="mr-2">Owner: </span>
 							{#if parlor.ownerInfo}
-								<UserAvatar user={parlor.ownerInfo} />
+								<UserAvatar user={parlor.ownerInfo} size={4} />
 							{/if}
-							<span
+							<span class="ml-2"
 								>{#if parlor.ownerInfo}{parlor.ownerInfo.username}{:else}unknown user {parlor.owner}{/if}</span
 							>
 						</p>
