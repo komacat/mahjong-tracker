@@ -25,6 +25,8 @@
 
     let state: State | null
 
+    let showDifference = false
+
     let playerIndex =
         data.user != null
             ? data.game.players.findIndex((player) => player.userId === data.user!.id)
@@ -564,7 +566,11 @@
                 class:border-yellow-500={action?.type === 'chonbo' &&
                     action.player?.id === state.players[0].user.id}
             >
-                <PlayerScore {...state.players[0]} username={state.players[0].user.username} />
+                <PlayerScore
+                    {...state.players[0]}
+                    username={state.players[0].user.username}
+                    compareTo={action == null && showDifference ? state.players[0].score : null}
+                />
             </button>
             <button
                 on:click={() => onPlayerClick(state.players[1].user)}
@@ -575,7 +581,11 @@
                 class:border-yellow-500={action?.type === 'chonbo' &&
                     action.player?.id === state.players[1].user.id}
             >
-                <PlayerScore {...state.players[1]} username={state.players[1].user.username} />
+                <PlayerScore
+                    {...state.players[1]}
+                    username={state.players[1].user.username}
+                    compareTo={action == null && showDifference ? state.players[0].score : null}
+                />
             </button>
             <button
                 on:click={() => onPlayerClick(state.players[2].user)}
@@ -586,7 +596,11 @@
                 class:border-yellow-500={action?.type === 'chonbo' &&
                     action.player?.id === state.players[2].user.id}
             >
-                <PlayerScore {...state.players[2]} username={state.players[2].user.username} />
+                <PlayerScore
+                    {...state.players[2]}
+                    username={state.players[2].user.username}
+                    compareTo={action == null && showDifference ? state.players[0].score : null}
+                />
             </button>
             {#if state.players[3] != null}
                 <button
@@ -598,7 +612,11 @@
                     class:border-yellow-500={action?.type === 'chonbo' &&
                         action.player?.id === state.players[3].user.id}
                 >
-                    <PlayerScore {...state.players[3]} username={state.players[3].user.username} />
+                    <PlayerScore
+                        {...state.players[3]}
+                        username={state.players[3].user.username}
+                        compareTo={action == null && showDifference ? state.players[0].score : null}
+                    />
                 </button>
             {/if}
             <div
@@ -760,6 +778,15 @@
                 <p class="absolute left-[31%] top-[45%]">{displayPoint[9]}</p>
             {/if}
             {#if action == null}
+                <button
+                    class="absolute bottom-4 right-4 flex h-20 w-20 flex-col justify-center rounded-lg border border-white"
+                    on:click={() => (showDifference = !showDifference)}
+                    class:bg-blue-500={showDifference}
+                    class:text-white={showDifference}
+                >
+                    <span class="material-symbols-rounded -my-2 text-4xl"> add </span>
+                    <span class="material-symbols-rounded -my-2 text-4xl"> remove </span>
+                </button>
                 <button
                     class="absolute bottom-4 left-4 flex h-20 w-20 items-center justify-center rounded-lg border border-white"
                     on:click={() => (playerIndex = (playerIndex + 1) % state.players.length)}
