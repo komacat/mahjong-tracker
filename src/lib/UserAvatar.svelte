@@ -2,11 +2,12 @@
     import type { User } from '@prisma/client'
 
     export let user: User | undefined
-    export let size: 'sm' | 'lg' = 'lg'
+    export let size: 'sm' | 'md' | 'lg' = 'md'
 
     const sizeToClassMap = {
         sm: 'w-4 h-4',
-        lg: 'w-8 h-8',
+        md: 'w-8 h-8',
+        lg: 'w-12 h-12',
     }
 </script>
 

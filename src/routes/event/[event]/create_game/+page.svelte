@@ -12,6 +12,7 @@
     import { PUBLIC_CAPTCHA_CLIENT_KEY } from '$env/static/public'
     import { flip } from 'svelte/animate'
     import { goto } from '$app/navigation'
+    import UserAvatar from '$lib/UserAvatar.svelte'
 
     export let data: PageData
 
@@ -171,11 +172,7 @@
                                             (roster = [...roster, { id: user.id, user }])}
                                         class="flex flex-row items-center space-x-2 py-4"
                                     >
-                                        <img
-                                            src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
-                                            alt="avatar of {user.username}"
-                                            class="h-8 w-8 rounded-full"
-                                        />
+                                        <UserAvatar {user} />
                                         <p>{user.username}</p>
                                     </button>
                                 {/each}
@@ -199,12 +196,7 @@
                                 <span class="material-symbols-rounded cursor-pointer select-none"
                                     >drag_indicator</span
                                 >
-                                <img
-                                    src="https://cdn.discordapp.com/avatars/{player.user.id}/{player
-                                        .user.avatar}.webp"
-                                    alt="avatar of {player.user.username}"
-                                    class="h-8 w-8 rounded-full"
-                                />
+                                <UserAvatar user={player.user} />
                                 <p class="flex-1 truncate">{player.user.username}</p>
                                 {#if Math.floor(roster.length / numPlayers) * numPlayers > i}
                                     <p class="text-sm"># {Math.floor(i / numPlayers) + 1}</p>
