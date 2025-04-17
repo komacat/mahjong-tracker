@@ -1,8 +1,8 @@
-import { error } from "@sveltejs/kit";
-import prisma from "$lib/server/prisma";
-import { validateCaptcha } from "$lib/server/captcha";
+import { error } from '@sveltejs/kit'
+import prisma from '$lib/server/prisma'
+import { validateCaptcha } from '$lib/server/captcha'
 
-export const POST = (async ({ params, request }) => {
+export const POST = async ({ params, request }) => {
     const eventId = +(params.event ?? NaN)
 
     if (isNaN(eventId)) {
@@ -29,12 +29,12 @@ export const POST = (async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
+                        eventId,
+                    },
                 },
                 data: {
-                    status: 'ACCEPTED'
-                }
+                    status: 'ACCEPTED',
+                },
             })
             break
         case 'reject':
@@ -42,12 +42,12 @@ export const POST = (async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
+                        eventId,
+                    },
                 },
                 data: {
-                    status: 'REJECTED'
-                }
+                    status: 'REJECTED',
+                },
             })
             break
         case 'remove':
@@ -55,9 +55,9 @@ export const POST = (async ({ params, request }) => {
                 where: {
                     userId_eventId: {
                         userId,
-                        eventId
-                    }
-                }
+                        eventId,
+                    },
+                },
             })
             break
         default:
@@ -65,4 +65,4 @@ export const POST = (async ({ params, request }) => {
     }
 
     return new Response()
-})
+}

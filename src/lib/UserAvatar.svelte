@@ -1,22 +1,27 @@
 <script lang="ts">
-	import type { User } from '@prisma/client'
+    import type { User } from '@prisma/client'
 
-	export let user: User | undefined
-	export let size: number = 8
+    export let user: User | undefined
+    export let size: 'sm' | 'lg' = 'lg'
+
+    const sizeToClassMap = {
+        sm: 'w-4 h-4',
+        lg: 'w-8 h-8',
+    }
 </script>
 
 {#if user}
-	<div class="h-{size} w-{size} overflow-hidden rounded-full">
-		<object
-			data="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
-			type="image/webp"
-			title="avatar of {user.username}"
-			class="h-full w-full"
-		>
-			<img
-				src="https://cdn.discordapp.com/emojis/1235123039956500491.webp?size=96"
-				alt="avatar of {user.username}"
-			/>
-		</object>
-	</div>
+    <div class={`overflow-hidden rounded-full ${sizeToClassMap[size]}`}>
+        <object
+            data="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
+            type="image/webp"
+            title="avatar of {user.username}"
+            class="h-full w-full"
+        >
+            <img
+                src="https://cdn.discordapp.com/emojis/1235123039956500491.webp?size=96"
+                alt="avatar of {user.username}"
+            />
+        </object>
+    </div>
 {/if}

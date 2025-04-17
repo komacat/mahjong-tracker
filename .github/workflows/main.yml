@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "$SSH_PRIVATE_KEY" > ../private.key
+                  sudo chmod 600 ../private.key
+                  echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+                  ssh -i "$SSH_KEY_PATH" "${SSH_USER}@${SSH_HOST}" "cd ~/mahjong-tracker && git pull --rebase && docker compose up -d --build"
+              shell: bash
+              env:
+                  SSH_PRIVATE_KEY: ${{secrets.KEY}}
+                  SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+                  SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+                  SSH_USER: ${{ secrets.USERNAME }}
+                  SSH_HOST: ${{ secrets.HOST }}

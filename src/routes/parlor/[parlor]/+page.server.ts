@@ -1,6 +1,6 @@
-import { error } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
-import prisma from "$lib/server/prisma";
+import { error } from '@sveltejs/kit'
+import type { PageServerLoad } from './$types'
+import prisma from '$lib/server/prisma'
 
 export const load = (async ({ params }) => {
     const parlorId = +(params.parlor ?? NaN)
@@ -11,9 +11,9 @@ export const load = (async ({ params }) => {
 
     const events = await prisma.event.findMany({
         where: {
-            parlorId
-        }
+            parlorId,
+        },
     })
 
     return { events }
-}) satisfies PageServerLoad;
+}) satisfies PageServerLoad
