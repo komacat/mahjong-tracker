@@ -22,11 +22,13 @@
                         <h2 class="text-xl font-semibold">{parlor.name}</h2>
                         <p class="text-sm">{parlor.location}</p>
                         <p class="flex flex-row items-center text-sm">
-                            <span class="mr-2">Owner: </span>
+                            <span>Owner: </span>
                             {#if parlor.ownerInfo}
-                                <UserAvatar user={parlor.ownerInfo} size="sm" />
+                                <span class="ml-2 mr-1">
+                                    <UserAvatar user={parlor.ownerInfo} size="sm" />
+                                </span>
                             {/if}
-                            <span class="ml-2"
+                            <span
                                 >{#if parlor.ownerInfo}{parlor.ownerInfo.username}{:else}unknown
                                     user {parlor.owner}{/if}</span
                             >
