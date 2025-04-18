@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { User } from '@prisma/client'
     import { fade } from 'svelte/transition'
+    import UserAvatar from './UserAvatar.svelte'
 
     export let user: User | null = null
     let menuOpened = false
@@ -16,11 +17,7 @@
     <div class="flex flex-row space-x-8 p-2">
         {#if user != null}
             <button on:click={() => (menuOpened = !menuOpened)}>
-                <img
-                    src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.webp"
-                    alt="avatar of {user.username}"
-                    class="h-12 w-12 rounded-full"
-                />
+                <UserAvatar {user} size="lg" />
             </button>
         {:else}
             <a

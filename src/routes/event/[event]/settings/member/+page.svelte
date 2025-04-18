@@ -79,12 +79,7 @@
         {#each data.attendee.filter(({ status }) => status === 'PENDING') as joinRequest}
             <div class="flex flex-row items-center justify-between p-4">
                 <div class="flex flex-row items-center space-x-4">
-                    <img
-                        src="https://cdn.discordapp.com/avatars/{joinRequest.user.id}/{joinRequest
-                            .user.avatar}.webp"
-                        alt="avatar of {joinRequest.user.username}"
-                        class="h-8 w-8 rounded-full"
-                    />
+                    <UserAvatar user={joinRequest.user} />
                     <p>{joinRequest.user.username}</p>
                 </div>
                 <div class="flex flex-row items-center space-x-4">
