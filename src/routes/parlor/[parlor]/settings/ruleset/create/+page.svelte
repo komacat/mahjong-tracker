@@ -689,7 +689,11 @@
                     </div>
                     <button
                         type="button"
-                        on:click={() => (scoring = { ...scoring, kiriage: !scoring.kiriage })}
+                        on:click={() =>
+                            (scoring = {
+                                ...scoring,
+                                kiriage: !scoring.kiriage,
+                            })}
                         class="group flex w-full cursor-pointer items-center justify-between"
                     >
                         <span class="ms-3 text-sm font-medium text-gray-900">Kiriage</span>
@@ -704,7 +708,11 @@
                     </button>
                     <button
                         type="button"
-                        on:click={() => (scoring = { ...scoring, fixed30fu: !scoring.fixed30fu })}
+                        on:click={() =>
+                            (scoring = {
+                                ...scoring,
+                                fixed30fu: !scoring.fixed30fu,
+                            })}
                         class="group flex w-full cursor-pointer items-center justify-between"
                     >
                         <span class="ms-3 text-sm font-medium text-gray-900">Fixed 30 Fu</span>
@@ -720,7 +728,11 @@
                     {#if formDataObject?.player === 'three'}
                         <button
                             type="button"
-                            on:click={() => (scoring = { ...scoring, tsumozon: !scoring.tsumozon })}
+                            on:click={() =>
+                                (scoring = {
+                                    ...scoring,
+                                    tsumozon: !scoring.tsumozon,
+                                })}
                             class="group flex w-full cursor-pointer items-center justify-between"
                         >
                             <span class="ms-3 text-sm font-medium text-gray-900">Tsumozon</span>
@@ -767,7 +779,11 @@
                             <button
                                 type="button"
                                 on:click={() => {
-                                    chonbo = { type: 'score', name: 'Mangan', affectsScore: true }
+                                    chonbo = {
+                                        type: 'score',
+                                        name: 'Mangan',
+                                        affectsScore: true,
+                                    }
                                 }}
                                 class="flex-1 rounded-lg border py-4 text-sm"
                                 class:bg-blue-500={chonbo.type === 'score'}
@@ -776,7 +792,11 @@
                             <button
                                 type="button"
                                 on:click={() => {
-                                    chonbo = { type: 'fixed', point: 12000, affectsScore: false }
+                                    chonbo = {
+                                        type: 'fixed',
+                                        point: 12000,
+                                        affectsScore: false,
+                                    }
                                 }}
                                 class="flex-1 rounded-lg border py-4 text-sm"
                                 class:bg-blue-500={chonbo.type === 'fixed'}

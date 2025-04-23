@@ -197,9 +197,13 @@
                                     >drag_indicator</span
                                 >
                                 <UserAvatar user={player.user} />
-                                <p class="flex-1 truncate">{player.user.username}</p>
+                                <p class="flex-1 truncate">
+                                    {player.user.username}
+                                </p>
                                 {#if Math.floor(roster.length / numPlayers) * numPlayers > i}
-                                    <p class="text-sm"># {Math.floor(i / numPlayers) + 1}</p>
+                                    <p class="text-sm">
+                                        # {Math.floor(i / numPlayers) + 1}
+                                    </p>
                                     <p class="font-mj text-2xl">
                                         {'東南西北'.charAt(i % numPlayers)}
                                     </p>

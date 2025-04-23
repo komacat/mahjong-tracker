@@ -621,7 +621,11 @@
                 <button
                     type="button"
                     on:click={() => {
-                        ruleset.chonbo = { type: 'score', name: 'Mangan', affectsScore: true }
+                        ruleset.chonbo = {
+                            type: 'score',
+                            name: 'Mangan',
+                            affectsScore: true,
+                        }
                     }}
                     class="flex-1 rounded-lg border py-4 text-sm"
                     class:bg-blue-500={ruleset.chonbo.type === 'score'}
@@ -630,7 +634,11 @@
                 <button
                     type="button"
                     on:click={() => {
-                        ruleset.chonbo = { type: 'fixed', point: 12000, affectsScore: false }
+                        ruleset.chonbo = {
+                            type: 'fixed',
+                            point: 12000,
+                            affectsScore: false,
+                        }
                     }}
                     class="flex-1 rounded-lg border py-4 text-sm"
                     class:bg-blue-500={ruleset.chonbo.type === 'fixed'}

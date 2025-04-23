@@ -748,19 +748,25 @@
                 {/if}
             </svg>
             {#if displayPoint[0]}
-                <p class="absolute bottom-[10%] right-[10%]">{displayPoint[0]}</p>
+                <p class="absolute bottom-[10%] right-[10%]">
+                    {displayPoint[0]}
+                </p>
             {/if}
             {#if displayPoint[1]}
                 <p class="absolute left-[40%] top-[70%]">{displayPoint[1]}</p>
             {/if}
             {#if displayPoint[2]}
-                <p class="absolute bottom-[10%] left-[10%]">{displayPoint[2]}</p>
+                <p class="absolute bottom-[10%] left-[10%]">
+                    {displayPoint[2]}
+                </p>
             {/if}
             {#if displayPoint[3]}
                 <p class="absolute right-[10%] top-[10%]">{displayPoint[3]}</p>
             {/if}
             {#if displayPoint[4]}
-                <p class="absolute left-1/2 top-1/4 -translate-x-1/2">{displayPoint[4]}</p>
+                <p class="absolute left-1/2 top-1/4 -translate-x-1/2">
+                    {displayPoint[4]}
+                </p>
             {/if}
             {#if displayPoint[5]}
                 <p class="absolute left-[10%] top-[10%]">{displayPoint[5]}</p>
@@ -837,7 +843,9 @@
                     {#if data.game.timer.state === 'running'}
                         <div class="flex flex-row items-baseline space-x-4">
                             <p class="font-bold">Action</p>
-                            <p class="text-xl font-bold text-red-500">{error}</p>
+                            <p class="text-xl font-bold text-red-500">
+                                {error}
+                            </p>
                         </div>
                         <div class="my-4 grid grid-cols-2 gap-x-8 gap-y-4">
                             <button
@@ -998,7 +1006,9 @@
                                 <br />or click Submit{/if}
                         </p>
                     {:else}
-                        <p class="px-4 text-2xl">Winner: {activeWinner.username}</p>
+                        <p class="px-4 text-2xl">
+                            Winner: {activeWinner.username}
+                        </p>
                         <RonScoring
                             scores={state.players.find(
                                 (player) => player.user.id === activeWinner?.id

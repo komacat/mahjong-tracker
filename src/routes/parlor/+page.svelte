@@ -33,7 +33,9 @@
                                     user {parlor.owner}{/if}</span
                             >
                         </p>
-                        {#if parlor.note}<p class="text-sm">{parlor.note}</p>{/if}
+                        {#if parlor.note}<p class="text-sm">
+                                {parlor.note}
+                            </p>{/if}
                     </div>
                     <span class="material-symbols-rounded my-auto">chevron_right</span>
                 </a>

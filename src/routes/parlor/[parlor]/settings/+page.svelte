@@ -32,7 +32,9 @@
             <a
                 class="flex flex-row items-center justify-between p-6"
                 class:bg-gray-50={i % 2 === 1}
-                {href}>{name} <span class="material-symbols-rounded">chevron_right</span></a
+                {href}
+                >{name}
+                <span class="material-symbols-rounded">chevron_right</span></a
             >
         {/each}
     </section>

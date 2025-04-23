@@ -146,7 +146,11 @@ export function sanitizeAction(action: any): PrismaJson.Action | null {
                 return null
             }
 
-            return { type: 'tsumo', winner: action.winner, scores: action.scores }
+            return {
+                type: 'tsumo',
+                winner: action.winner,
+                scores: action.scores,
+            }
         case 'draw':
             console.log(action.tenpai)
             if (!checkArrayS(action.tenpai, 4)) {

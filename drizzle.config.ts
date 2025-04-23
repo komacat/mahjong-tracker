@@ -17,4 +17,4 @@ export default defineConfig({
     verbose: true,
     // Always ask for confirmation
     strict: true,
-});
+})
