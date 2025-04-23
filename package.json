@@ -28,7 +28,6 @@
         "@types/pg": "^8.11.11",
         "@types/uuid": "^10.0.0",
         "autoprefixer": "^10.4.20",
-        "drizzle-kit": "^0.30.6",
         "eslint": "^9.11.1",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-svelte": "^2.44.1",
@@ -52,6 +51,7 @@
     },
     "type": "module",
     "dependencies": {
+        "drizzle-kit": "^0.30.6",
         "@prisma/client": "^5.20.0",
         "dotenv": "^16.4.7",
         "drizzle-orm": "^0.41.0",
