@@ -1,6 +1,8 @@
-import type { User } from '@prisma/client'
 import { refreshToken } from './discord'
 import prisma from './prisma'
+import { db, oneOrNull, type User } from './drizzle'
+import { user, userToken } from './drizzle/schema'
+import { eq, getTableColumns } from 'drizzle-orm'
 import { v5 as uuidv5 } from 'uuid'
 
 const NAMESPACE_GUEST = 'e17fa822-f705-43fc-beaa-dcd14e13c4e0'
@@ -22,14 +24,7 @@ function registerUser({
 }
 
 export async function getUser(sessionId: string): Promise<User | null> {
-    return (
-        (
-            await prisma.userToken.findUnique({
-                where: { sessionId },
-                include: { user: true },
-            })
-        )?.user ?? null
-    )
+    return db.select({ ...getTableColumns(user) }).from(userToken).innerJoin(user, eq(user.id, userToken.userId)).where(eq(userToken.sessionId, sessionId)).limit(1).then(oneOrNull)
 }
 
 export async function getUserById(userId: string) {
