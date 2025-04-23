@@ -24,7 +24,13 @@ function registerUser({
 }
 
 export async function getUser(sessionId: string): Promise<User | null> {
-    return db.select({ ...getTableColumns(user) }).from(userToken).innerJoin(user, eq(user.id, userToken.userId)).where(eq(userToken.sessionId, sessionId)).limit(1).then(oneOrNull)
+    return db
+        .select({ ...getTableColumns(user) })
+        .from(userToken)
+        .innerJoin(user, eq(user.id, userToken.userId))
+        .where(eq(userToken.sessionId, sessionId))
+        .limit(1)
+        .then(oneOrNull)
 }
 
 export async function getUserById(userId: string) {

@@ -18,7 +18,9 @@
 
 <main class="mx-auto max-w-2xl">
     <section class="p-4">
-        <h1 class="text-2xl font-bold">{data.event.name} @ {data.event.parlor.name} Settings</h1>
+        <h1 class="text-2xl font-bold">
+            {data.event.name} @ {data.event.parlor.name} Settings
+        </h1>
     </section>
     <section class="px-4">
         <h2 class="text-red py-2 font-bold text-red-500">Danger Zone</h2>

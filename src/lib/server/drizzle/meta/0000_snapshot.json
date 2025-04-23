@@ -1,875 +1,794 @@
 {
-  "id": "00000000-0000-0000-0000-000000000000",
-  "prevId": "",
-  "version": "7",
-  "dialect": "postgresql",
-  "tables": {
-    "public._prisma_migrations": {
-      "name": "_prisma_migrations",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(36)",
-          "primaryKey": true,
-          "notNull": true
+    "id": "00000000-0000-0000-0000-000000000000",
+    "prevId": "",
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "public._prisma_migrations": {
+            "name": "_prisma_migrations",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "varchar(36)",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "checksum": {
+                    "name": "checksum",
+                    "type": "varchar(64)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "finished_at": {
+                    "name": "finished_at",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "migration_name": {
+                    "name": "migration_name",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "logs": {
+                    "name": "logs",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "rolled_back_at": {
+                    "name": "rolled_back_at",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "started_at": {
+                    "name": "started_at",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "applied_steps_count": {
+                    "name": "applied_steps_count",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 0
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "checksum": {
-          "name": "checksum",
-          "type": "varchar(64)",
-          "primaryKey": false,
-          "notNull": true
+        "public.Parlor": {
+            "name": "Parlor",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "location": {
+                    "name": "location",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "owner": {
+                    "name": "owner",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "website": {
+                    "name": "website",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "note": {
+                    "name": "note",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "finished_at": {
-          "name": "finished_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
+        "public.ParlorMember": {
+            "name": "ParlorMember",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "parlorId": {
+                    "name": "parlorId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "userId": {
+                    "name": "userId",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "ParlorMember_parlorId_fkey": {
+                    "name": "ParlorMember_parlorId_fkey",
+                    "tableFrom": "ParlorMember",
+                    "tableTo": "Parlor",
+                    "schemaTo": "public",
+                    "columnsFrom": ["parlorId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "restrict",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "migration_name": {
-          "name": "migration_name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
+        "public.Event": {
+            "name": "Event",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "location": {
+                    "name": "location",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "description": {
+                    "name": "description",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "parlorId": {
+                    "name": "parlorId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "rulesetId": {
+                    "name": "rulesetId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "joinPolicy": {
+                    "name": "joinPolicy",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "Event_parlorId_fkey": {
+                    "name": "Event_parlorId_fkey",
+                    "tableFrom": "Event",
+                    "tableTo": "Parlor",
+                    "schemaTo": "public",
+                    "columnsFrom": ["parlorId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "restrict",
+                    "onUpdate": "cascade"
+                },
+                "Event_rulesetId_fkey": {
+                    "name": "Event_rulesetId_fkey",
+                    "tableFrom": "Event",
+                    "tableTo": "Ruleset",
+                    "schemaTo": "public",
+                    "columnsFrom": ["rulesetId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "restrict",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "logs": {
-          "name": "logs",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
+        "public.User": {
+            "name": "User",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "avatar": {
+                    "name": "avatar",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "rolled_back_at": {
-          "name": "rolled_back_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
+        "public.UserToken": {
+            "name": "UserToken",
+            "schema": "",
+            "columns": {
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "accessToken": {
+                    "name": "accessToken",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "refreshToken": {
+                    "name": "refreshToken",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "expiresAt": {
+                    "name": "expiresAt",
+                    "type": "timestamp(3)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "userId": {
+                    "name": "userId",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "UserToken_userId_fkey": {
+                    "name": "UserToken_userId_fkey",
+                    "tableFrom": "UserToken",
+                    "tableTo": "User",
+                    "schemaTo": "public",
+                    "columnsFrom": ["userId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "restrict",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "started_at": {
-          "name": "started_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+        "public.Ruleset": {
+            "name": "Ruleset",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "startScore": {
+                    "name": "startScore",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "returnScore": {
+                    "name": "returnScore",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "uma": {
+                    "name": "uma",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "honba": {
+                    "name": "honba",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "tenpaiFee": {
+                    "name": "tenpaiFee",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "endgamePot": {
+                    "name": "endgamePot",
+                    "type": "EndgamePolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "tiebreaker": {
+                    "name": "tiebreaker",
+                    "type": "TiebreakerPolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "renchan": {
+                    "name": "renchan",
+                    "type": "RenchanPolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "allLast": {
+                    "name": "allLast",
+                    "type": "AllLastPolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "doubleRon": {
+                    "name": "doubleRon",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "tripleRon": {
+                    "name": "tripleRon",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "nagashi": {
+                    "name": "nagashi",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "nagashiIsTsumo": {
+                    "name": "nagashiIsTsumo",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "oyaNagashi": {
+                    "name": "oyaNagashi",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "suddenDeath": {
+                    "name": "suddenDeath",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "tobi": {
+                    "name": "tobi",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "tobiAtZero": {
+                    "name": "tobiAtZero",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "calledGame": {
+                    "name": "calledGame",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "riichiBelow1000": {
+                    "name": "riichiBelow1000",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "scores": {
+                    "name": "scores",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "note": {
+                    "name": "note",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "parlorId": {
+                    "name": "parlorId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "allLastPlacement": {
+                    "name": "allLastPlacement",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "multiRonHonbaPolicy": {
+                    "name": "multiRonHonbaPolicy",
+                    "type": "MultiRonHonbaPolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "multiRonPotPolicy": {
+                    "name": "multiRonPotPolicy",
+                    "type": "MultiRonPotPolicy",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "length": {
+                    "name": "length",
+                    "type": "GameLength",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "player": {
+                    "name": "player",
+                    "type": "Players",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "record": {
+                    "name": "record",
+                    "type": "Record",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "chonbo": {
+                    "name": "chonbo",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "Ruleset_parlorId_fkey": {
+                    "name": "Ruleset_parlorId_fkey",
+                    "tableFrom": "Ruleset",
+                    "tableTo": "Parlor",
+                    "schemaTo": "public",
+                    "columnsFrom": ["parlorId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "restrict",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         },
-        "applied_steps_count": {
-          "name": "applied_steps_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
+        "public.Game": {
+            "name": "Game",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "eventId": {
+                    "name": "eventId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "startTime": {
+                    "name": "startTime",
+                    "type": "timestamp(3)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "durationSeconds": {
+                    "name": "durationSeconds",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "actions": {
+                    "name": "actions",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "table": {
+                    "name": "table",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "timer": {
+                    "name": "timer",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "Game_eventId_fkey": {
+                    "name": "Game_eventId_fkey",
+                    "tableFrom": "Game",
+                    "tableTo": "Event",
+                    "schemaTo": "public",
+                    "columnsFrom": ["eventId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
+        },
+        "public.EventAttendee": {
+            "name": "EventAttendee",
+            "schema": "",
+            "columns": {
+                "userId": {
+                    "name": "userId",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "eventId": {
+                    "name": "eventId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "status": {
+                    "name": "status",
+                    "type": "EventJoinRequestStatus",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "EventAttendee_userId_fkey": {
+                    "name": "EventAttendee_userId_fkey",
+                    "tableFrom": "EventAttendee",
+                    "tableTo": "User",
+                    "schemaTo": "public",
+                    "columnsFrom": ["userId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "EventAttendee_eventId_fkey": {
+                    "name": "EventAttendee_eventId_fkey",
+                    "tableFrom": "EventAttendee",
+                    "tableTo": "Event",
+                    "schemaTo": "public",
+                    "columnsFrom": ["eventId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {
+                "EventAttendee_pkey": {
+                    "name": "EventAttendee_pkey",
+                    "columns": ["userId", "eventId"]
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
+        },
+        "public.GamePlayer": {
+            "name": "GamePlayer",
+            "schema": "",
+            "columns": {
+                "gameId": {
+                    "name": "gameId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "userId": {
+                    "name": "userId",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "index": {
+                    "name": "index",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "GamePlayer_userId_fkey": {
+                    "name": "GamePlayer_userId_fkey",
+                    "tableFrom": "GamePlayer",
+                    "tableTo": "User",
+                    "schemaTo": "public",
+                    "columnsFrom": ["userId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "GamePlayer_gameId_fkey": {
+                    "name": "GamePlayer_gameId_fkey",
+                    "tableFrom": "GamePlayer",
+                    "tableTo": "Game",
+                    "schemaTo": "public",
+                    "columnsFrom": ["gameId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {
+                "GamePlayer_pkey": {
+                    "name": "GamePlayer_pkey",
+                    "columns": ["gameId", "userId"]
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {},
+            "policies": {},
+            "isRLSEnabled": false
         }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
     },
-    "public.Parlor": {
-      "name": "Parlor",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+    "enums": {
+        "public.AllLastPolicy": {
+            "name": "AllLastPolicy",
+            "values": ["AGARIYAME", "TENPAIYAME", "NONE"],
+            "schema": "public"
         },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+        "public.EndgamePolicy": {
+            "name": "EndgamePolicy",
+            "values": ["DISAPPEARS", "TOP"],
+            "schema": "public"
         },
-        "location": {
-          "name": "location",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+        "public.EventJoinRequestStatus": {
+            "name": "EventJoinRequestStatus",
+            "values": ["PENDING", "ACCEPTED", "REJECTED"],
+            "schema": "public"
         },
-        "owner": {
-          "name": "owner",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+        "public.GameLength": {
+            "name": "GameLength",
+            "values": ["HANCHAN", "TONPU"],
+            "schema": "public"
         },
-        "website": {
-          "name": "website",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
+        "public.MultiRonHonbaPolicy": {
+            "name": "MultiRonHonbaPolicy",
+            "values": ["ATAMAHANE", "SPLIT", "ALL"],
+            "schema": "public"
         },
-        "note": {
-          "name": "note",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+        "public.MultiRonPotPolicy": {
+            "name": "MultiRonPotPolicy",
+            "values": ["ATAMAHANE", "SPLIT"],
+            "schema": "public"
+        },
+        "public.Players": {
+            "name": "Players",
+            "values": ["FOUR", "THREE"],
+            "schema": "public"
+        },
+        "public.Record": {
+            "name": "Record",
+            "values": ["GAME", "HAND"],
+            "schema": "public"
+        },
+        "public.RenchanPolicy": {
+            "name": "RenchanPolicy",
+            "values": ["NONE", "TENPAI", "AGARI", "ALWAYS"],
+            "schema": "public"
+        },
+        "public.TiebreakerPolicy": {
+            "name": "TiebreakerPolicy",
+            "values": ["SPLIT", "WIND"],
+            "schema": "public"
         }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
     },
-    "public.ParlorMember": {
-      "name": "ParlorMember",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "parlorId": {
-          "name": "parlorId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "ParlorMember_parlorId_fkey": {
-          "name": "ParlorMember_parlorId_fkey",
-          "tableFrom": "ParlorMember",
-          "tableTo": "Parlor",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "parlorId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.Event": {
-      "name": "Event",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "location": {
-          "name": "location",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "parlorId": {
-          "name": "parlorId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "rulesetId": {
-          "name": "rulesetId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "joinPolicy": {
-          "name": "joinPolicy",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Event_parlorId_fkey": {
-          "name": "Event_parlorId_fkey",
-          "tableFrom": "Event",
-          "tableTo": "Parlor",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "parlorId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        },
-        "Event_rulesetId_fkey": {
-          "name": "Event_rulesetId_fkey",
-          "tableFrom": "Event",
-          "tableTo": "Ruleset",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "rulesetId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.User": {
-      "name": "User",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "avatar": {
-          "name": "avatar",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "username": {
-          "name": "username",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.UserToken": {
-      "name": "UserToken",
-      "schema": "",
-      "columns": {
-        "sessionId": {
-          "name": "sessionId",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "accessToken": {
-          "name": "accessToken",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "refreshToken": {
-          "name": "refreshToken",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "expiresAt": {
-          "name": "expiresAt",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "UserToken_userId_fkey": {
-          "name": "UserToken_userId_fkey",
-          "tableFrom": "UserToken",
-          "tableTo": "User",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.Ruleset": {
-      "name": "Ruleset",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "startScore": {
-          "name": "startScore",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "returnScore": {
-          "name": "returnScore",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "uma": {
-          "name": "uma",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "honba": {
-          "name": "honba",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tenpaiFee": {
-          "name": "tenpaiFee",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endgamePot": {
-          "name": "endgamePot",
-          "type": "EndgamePolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tiebreaker": {
-          "name": "tiebreaker",
-          "type": "TiebreakerPolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "renchan": {
-          "name": "renchan",
-          "type": "RenchanPolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "allLast": {
-          "name": "allLast",
-          "type": "AllLastPolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "doubleRon": {
-          "name": "doubleRon",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tripleRon": {
-          "name": "tripleRon",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nagashi": {
-          "name": "nagashi",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nagashiIsTsumo": {
-          "name": "nagashiIsTsumo",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "oyaNagashi": {
-          "name": "oyaNagashi",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "suddenDeath": {
-          "name": "suddenDeath",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tobi": {
-          "name": "tobi",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tobiAtZero": {
-          "name": "tobiAtZero",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "calledGame": {
-          "name": "calledGame",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "riichiBelow1000": {
-          "name": "riichiBelow1000",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "scores": {
-          "name": "scores",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "note": {
-          "name": "note",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "parlorId": {
-          "name": "parlorId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "allLastPlacement": {
-          "name": "allLastPlacement",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "multiRonHonbaPolicy": {
-          "name": "multiRonHonbaPolicy",
-          "type": "MultiRonHonbaPolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "multiRonPotPolicy": {
-          "name": "multiRonPotPolicy",
-          "type": "MultiRonPotPolicy",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "length": {
-          "name": "length",
-          "type": "GameLength",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "player": {
-          "name": "player",
-          "type": "Players",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "record": {
-          "name": "record",
-          "type": "Record",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "chonbo": {
-          "name": "chonbo",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Ruleset_parlorId_fkey": {
-          "name": "Ruleset_parlorId_fkey",
-          "tableFrom": "Ruleset",
-          "tableTo": "Parlor",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "parlorId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.Game": {
-      "name": "Game",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "eventId": {
-          "name": "eventId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "startTime": {
-          "name": "startTime",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "durationSeconds": {
-          "name": "durationSeconds",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "actions": {
-          "name": "actions",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "table": {
-          "name": "table",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "timer": {
-          "name": "timer",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Game_eventId_fkey": {
-          "name": "Game_eventId_fkey",
-          "tableFrom": "Game",
-          "tableTo": "Event",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "eventId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.EventAttendee": {
-      "name": "EventAttendee",
-      "schema": "",
-      "columns": {
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "eventId": {
-          "name": "eventId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "EventJoinRequestStatus",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "EventAttendee_userId_fkey": {
-          "name": "EventAttendee_userId_fkey",
-          "tableFrom": "EventAttendee",
-          "tableTo": "User",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "EventAttendee_eventId_fkey": {
-          "name": "EventAttendee_eventId_fkey",
-          "tableFrom": "EventAttendee",
-          "tableTo": "Event",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "eventId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {
-        "EventAttendee_pkey": {
-          "name": "EventAttendee_pkey",
-          "columns": [
-            "userId",
-            "eventId"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.GamePlayer": {
-      "name": "GamePlayer",
-      "schema": "",
-      "columns": {
-        "gameId": {
-          "name": "gameId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "index": {
-          "name": "index",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "GamePlayer_userId_fkey": {
-          "name": "GamePlayer_userId_fkey",
-          "tableFrom": "GamePlayer",
-          "tableTo": "User",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "GamePlayer_gameId_fkey": {
-          "name": "GamePlayer_gameId_fkey",
-          "tableFrom": "GamePlayer",
-          "tableTo": "Game",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "gameId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {
-        "GamePlayer_pkey": {
-          "name": "GamePlayer_pkey",
-          "columns": [
-            "gameId",
-            "userId"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    }
-  },
-  "enums": {
-    "public.AllLastPolicy": {
-      "name": "AllLastPolicy",
-      "values": [
-        "AGARIYAME",
-        "TENPAIYAME",
-        "NONE"
-      ],
-      "schema": "public"
-    },
-    "public.EndgamePolicy": {
-      "name": "EndgamePolicy",
-      "values": [
-        "DISAPPEARS",
-        "TOP"
-      ],
-      "schema": "public"
-    },
-    "public.EventJoinRequestStatus": {
-      "name": "EventJoinRequestStatus",
-      "values": [
-        "PENDING",
-        "ACCEPTED",
-        "REJECTED"
-      ],
-      "schema": "public"
-    },
-    "public.GameLength": {
-      "name": "GameLength",
-      "values": [
-        "HANCHAN",
-        "TONPU"
-      ],
-      "schema": "public"
-    },
-    "public.MultiRonHonbaPolicy": {
-      "name": "MultiRonHonbaPolicy",
-      "values": [
-        "ATAMAHANE",
-        "SPLIT",
-        "ALL"
-      ],
-      "schema": "public"
-    },
-    "public.MultiRonPotPolicy": {
-      "name": "MultiRonPotPolicy",
-      "values": [
-        "ATAMAHANE",
-        "SPLIT"
-      ],
-      "schema": "public"
-    },
-    "public.Players": {
-      "name": "Players",
-      "values": [
-        "FOUR",
-        "THREE"
-      ],
-      "schema": "public"
-    },
-    "public.Record": {
-      "name": "Record",
-      "values": [
-        "GAME",
-        "HAND"
-      ],
-      "schema": "public"
-    },
-    "public.RenchanPolicy": {
-      "name": "RenchanPolicy",
-      "values": [
-        "NONE",
-        "TENPAI",
-        "AGARI",
-        "ALWAYS"
-      ],
-      "schema": "public"
-    },
-    "public.TiebreakerPolicy": {
-      "name": "TiebreakerPolicy",
-      "values": [
-        "SPLIT",
-        "WIND"
-      ],
-      "schema": "public"
-    }
-  },
-  "schemas": {},
-  "sequences": {},
-  "roles": {},
-  "policies": {},
-  "views": {},
-  "_meta": {
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
-    "tables": {}
-  }
+    "sequences": {},
+    "roles": {},
+    "policies": {},
+    "views": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "tables": {}
+    }
 }

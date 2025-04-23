@@ -55,7 +55,10 @@
             window.grecaptcha
                 .execute(PUBLIC_CAPTCHA_CLIENT_KEY, { action: 'submit' })
                 .then(async (token) => {
-                    await fetch(`${data.event.id}/join`, { method: 'POST', body: token })
+                    await fetch(`${data.event.id}/join`, {
+                        method: 'POST',
+                        body: token,
+                    })
                     invalidateAll()
                 })
         })
@@ -65,7 +68,9 @@
 <main class="mx-auto max-w-2xl">
     <section class="p-4">
         <div class="flex flex-row items-center">
-            <h1 class="mr-auto text-2xl font-bold">{data.event.name} @ {data.event.parlor.name}</h1>
+            <h1 class="mr-auto text-2xl font-bold">
+                {data.event.name} @ {data.event.parlor.name}
+            </h1>
             {#if data.joinRequestStatus === 'PENDING'}
                 <p class="flex flex-row items-center p-4 text-sm text-violet-500">
                     <span class="material-symbols-rounded mr-2">hourglass</span>Join request pending

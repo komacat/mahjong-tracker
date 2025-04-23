@@ -6,7 +6,9 @@
 
 <main class="p-4">
     <section class="mb-4 pl-2">
-        <h1 class="text-2xl font-bold">{data.parlor.name} Settings - General</h1>
+        <h1 class="text-2xl font-bold">
+            {data.parlor.name} Settings - General
+        </h1>
     </section>
     <section class="flex flex-col text-xl font-medium">
         <h2 class="text-red mb-4 text-sm font-bold text-red-500">Danger Zone</h2>

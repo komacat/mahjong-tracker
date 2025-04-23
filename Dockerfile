@@ -13,6 +13,7 @@ RUN apk add --no-cache openssl
 WORKDIR /app
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
+COPY src/lib/server/drizzle src/lib/server/drizzle/
 COPY drizzle.config.ts .
 COPY package.json .
 EXPOSE 3000
