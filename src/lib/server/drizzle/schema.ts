@@ -1,8 +1,6 @@
 import { pgTable, varchar, timestamp, text, integer, serial, foreignKey, jsonb, boolean, primaryKey, pgEnum } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-
-
 export const allLastPolicy = pgEnum("AllLastPolicy", ['AGARIYAME', 'TENPAIYAME', 'NONE'])
 export const endgamePolicy = pgEnum("EndgamePolicy", ['DISAPPEARS', 'TOP'])
 export const eventJoinRequestStatus = pgEnum("EventJoinRequestStatus", ['PENDING', 'ACCEPTED', 'REJECTED'])
