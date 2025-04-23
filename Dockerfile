@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 RUN npm ci
-RUN npx prisma generate
+RUN npx drizzle-kit migrate
 RUN npm run build
 RUN npm prune --production
 
