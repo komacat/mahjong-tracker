@@ -1,5 +1,4 @@
 import { refreshToken } from './discord'
-import prisma from './prisma'
 import { db, oneOrNull, type User } from './drizzle'
 import { user, userToken } from './drizzle/schema'
 import { eq, getTableColumns } from 'drizzle-orm'
@@ -17,7 +16,10 @@ async function registerUser({
     username: string
     avatar: string | null
 }) {
-    await db.insert(user).values({id, username, avatar}).onConflictDoUpdate({target: user.id, set: {username, avatar}})
+    await db
+        .insert(user)
+        .values({ id, username, avatar })
+        .onConflictDoUpdate({ target: user.id, set: { username, avatar } })
     return getUserById(id)
 }
 
@@ -67,22 +69,20 @@ export async function registerUserToken({
         avatar: user.avatar,
     })
 
-    return prisma.userToken.upsert({
-        where: { sessionId },
-        update: {
-            userId: user.id,
-            accessToken,
-            refreshToken,
-            expiresAt,
-        },
-        create: {
+    return db
+        .insert(userToken)
+        .values({
             userId: user.id,
             sessionId,
             accessToken,
             refreshToken,
-            expiresAt,
-        },
-    })
+            expiresAt: expiresAt.toISOString(),
+        })
+        .onConflictDoUpdate({
+            target: userToken.sessionId,
+            set: { userId: user.id, accessToken, refreshToken, expiresAt: expiresAt.toISOString() },
+        })
+        .returning()
 }
 
 async function generateGuestUUID(username: string) {
@@ -92,52 +92,53 @@ async function generateGuestUUID(username: string) {
 export async function registerGuest(username: string) {
     const userId = await generateGuestUUID(username)
 
-    let user = await prisma.user.findUnique({
-        where: { id: userId },
-    })
+    const currentGuest = db
+        .select({ ...getTableColumns(user) })
+        .from(user)
+        .where(eq(user.id, userId))
 
-    if (!user) {
-        user = await prisma.user.create({
-            data: {
-                id: userId,
-                username: username,
-                avatar: null,
-            },
-        })
+    if (!currentGuest) {
+        return db
+            .insert(user)
+            .values({ id: userId, username, avatar: null })
+            .onConflictDoUpdate({ target: user.id, set: { username, avatar: null } })
+            .returning()
     }
 
-    return user
+    return currentGuest
 }
 
 export async function removeUserToken(sessionId: string) {
-    return prisma.userToken.delete({
-        where: { sessionId },
-    })
+    return db.delete(userToken).where(eq(userToken.sessionId, sessionId))
 }
 
 export async function getUserToken(sessionId: string) {
-    const userToken = await prisma.userToken.findUnique({
-        where: { sessionId },
-    })
+    const currentUserToken = await db
+        .select({ ...getTableColumns(userToken) })
+        .from(userToken)
+        .where(eq(userToken.sessionId, sessionId))
+        .limit(1)
+        .then(oneOrNull)
 
-    if (!userToken) {
+    if (!currentUserToken) {
         return null
     }
 
-    const { expiresAt } = userToken
+    const { expiresAt } = currentUserToken
 
-    if (expiresAt < new Date()) {
+    const expiresAtDate = new Date(expiresAt)
+
+    if (expiresAtDate < new Date()) {
         return null
     }
 
-    if (expiresAt.getTime() + 3600 * 1000 < new Date().getTime()) {
-        const newToken = await refreshToken(userToken.refreshToken)
+    if (expiresAtDate.getTime() + 3600 * 1000 < new Date().getTime()) {
+        const newToken = await refreshToken(currentUserToken.refreshToken)
 
         registerUserToken({ sessionId, ...newToken })
 
         return newToken.accessToken
     }
 
-    return userToken.accessToken
+    return currentUserToken.accessToken
 }
-
