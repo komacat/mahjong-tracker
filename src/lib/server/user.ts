@@ -4,10 +4,11 @@ import { db, oneOrNull, type User } from './drizzle'
 import { user, userToken } from './drizzle/schema'
 import { eq, getTableColumns } from 'drizzle-orm'
 import { v5 as uuidv5 } from 'uuid'
+import { usersSync } from 'drizzle-orm/neon'
 
 const NAMESPACE_GUEST = 'e17fa822-f705-43fc-beaa-dcd14e13c4e0'
 
-function registerUser({
+async function registerUser({
     id,
     username,
     avatar,
@@ -16,11 +17,8 @@ function registerUser({
     username: string
     avatar: string | null
 }) {
-    return prisma.user.upsert({
-        where: { id },
-        update: { username, avatar },
-        create: { id, username, avatar },
-    })
+    await db.insert(user).values({id, username, avatar}).onConflictDoUpdate({target: user.id, set: {username, avatar}})
+    return getUserById(id)
 }
 
 export async function getUser(sessionId: string): Promise<User | null> {
@@ -34,11 +32,16 @@ export async function getUser(sessionId: string): Promise<User | null> {
 }
 
 export async function getUserById(userId: string) {
-    return prisma.user.findUnique({ where: { id: userId } })
+    return db
+        .select({ ...getTableColumns(user) })
+        .from(user)
+        .where(eq(user.id, userId))
+        .limit(1)
+        .then(oneOrNull)
 }
 
 export async function getAllUsers(): Promise<User[]> {
-    return await prisma.user.findMany()
+    return db.select().from(user)
 }
 
 export async function registerUserToken({
@@ -137,3 +140,4 @@ export async function getUserToken(sessionId: string) {
 
     return userToken.accessToken
 }
+
